@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>上海初中英语单词通</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--p:#4A90D9;--pl:#E8F2FF;--ok:#52C41A;--no:#FF4D4F;--warn:#FAAD14;--bg:#F5F7FA;--card:#FFF;--t1:#333;--t2:#666;--t3:#999;--bd:#EEE;--r:12px;--sh:0 2px 12px rgba(0,0,0,.08)}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--t1);font-size:15px;line-height:1.6;padding-bottom:70px;min-height:100vh}
+.tab-bar{position:fixed;bottom:0;left:0;right:0;height:60px;background:#fff;display:flex;border-top:1px solid var(--bd);z-index:100;padding-bottom:env(safe-area-inset-bottom)}
+.tab-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;color:var(--t3);cursor:pointer;transition:color .2s}
+.tab-item.active{color:var(--p)}
+.tab-item .icon{font-size:22px;margin-bottom:2px}
+.page{display:none;padding:16px;padding-bottom:80px;min-height:calc(100vh - 60px)}
+.page.active{display:block}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:16px;margin-bottom:12px}
+.btn{display:inline-block;padding:10px 24px;border-radius:25px;border:none;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;text-align:center}
+.btn-primary{background:var(--p);color:#fff}.btn-primary:active{background:#3a7bc8}
+.btn-success{background:var(--ok);color:#fff}.btn-danger{background:var(--no);color:#fff}
+.btn-outline{background:#fff;color:var(--p);border:2px solid var(--p)}
+.btn-full{width:100%;display:block}.btn-sm{padding:6px 16px;font-size:13px}
+.stat-row{display:flex;justify-content:space-around;margin:12px 0}
+.stat-item{text-align:center}.stat-num{font-size:24px;font-weight:700;color:var(--p)}.stat-label{font-size:12px;color:var(--t3)}
+.progress-bar{height:8px;background:#eee;border-radius:4px;overflow:hidden;margin:8px 0}
+.progress-fill{height:100%;border-radius:4px;transition:width .3s}
+.progress-fill.blue{background:var(--p)}.progress-fill.green{background:var(--ok)}.progress-fill.orange{background:var(--warn)}
+.level-card{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border-radius:var(--r);padding:20px;margin-bottom:16px}
+.level-card h2{font-size:20px;margin-bottom:4px}.level-card .exp-text{font-size:13px;opacity:.9}
+.lvbar{position:relative;margin-top:14px}
+.lvtrack{position:absolute;top:6px;height:3px;background:rgba(255,255,255,.3);border-radius:2px}
+.lvfill{position:absolute;top:6px;height:3px;background:#fff;border-radius:2px;transition:width .4s}
+.lvsteps{display:flex;position:relative}
+.lvstep{flex:1;text-align:center;position:relative;font-size:10px;color:#fff}
+.lvstep .dot{width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,.35);border:2px solid rgba(255,255,255,.6);margin:0 auto 5px;position:relative;z-index:1}
+.lvstep.done .dot{background:#fff;border-color:#fff}
+.lvstep.cur .dot{background:#fff;border-color:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.3)}
+.lvstep .t{font-weight:700;font-size:11px}
+.lvstep .s{opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lvstep.cur .t,.lvstep.cur .s{opacity:1}
+.ladder{padding:4px 0}
+.lad-node{display:flex;gap:12px;align-items:flex-start;position:relative;padding-bottom:14px}
+.lad-node:last-child{padding-bottom:0}
+.lad-col{position:relative;width:30px;flex-shrink:0;display:flex;justify-content:center}
+.lad-node:not(:last-child) .lad-col::after{content:'';position:absolute;top:30px;left:50%;transform:translateX(-50%);width:2px;height:calc(100% - 16px);background:var(--bd)}
+.lad-dot{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;background:#e5e7eb;color:#9ca3af}
+.lad-node.done .lad-dot{background:var(--ok);color:#fff}
+.lad-node.cur .lad-dot{background:var(--p);color:#fff;box-shadow:0 0 0 4px var(--pl)}
+.lad-body{flex:1;min-width:0}
+.lad-name{font-weight:600;font-size:14px}
+.lad-node.lock .lad-name{color:var(--t3)}
+.lad-sub{font-size:12px;color:var(--t3);margin-top:1px}
+.lad-state{font-size:12px;flex-shrink:0;align-self:center;color:var(--t3)}
+.lad-node.cur .lad-state{color:var(--p);font-weight:600}
+.lad-node.done .lad-state{color:var(--ok)}
+.streak-card{background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);color:#fff;border-radius:var(--r);padding:16px;margin-bottom:16px;text-align:center}
+.streak-card .fire{font-size:36px}.streak-card .num{font-size:28px;font-weight:700}
+.daily-select{display:flex;gap:8px;justify-content:center;margin:12px 0}
+.daily-opt{padding:8px 16px;border-radius:20px;border:2px solid var(--bd);font-size:14px;cursor:pointer;transition:all .2s}
+.daily-opt.active{border-color:var(--p);background:var(--pl);color:var(--p);font-weight:600}
+.daily-custom{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px;font-size:14px;color:var(--t2)}
+.daily-custom input{width:80px;padding:8px 10px;border:2px solid var(--bd);border-radius:20px;font-size:15px;text-align:center;color:var(--p);font-weight:600;-moz-appearance:textfield}
+.daily-custom input:focus{outline:none;border-color:var(--p)}
+.word-card{background:var(--card);border-radius:var(--r);padding:20px;margin-bottom:16px;box-shadow:var(--sh)}
+.word-card .word{font-size:28px;font-weight:700;color:var(--p);margin-bottom:4px}
+.word-card .pos{color:var(--t2);font-size:14px;margin-bottom:8px}
+.word-card .pos .ipa{color:var(--p);font-family:"Times New Roman",serif}
+.word-card .cn{font-size:20px;color:var(--t1);margin-bottom:8px}
+.word-card .example{background:#f8f9fa;border-radius:8px;padding:12px;margin:8px 0;font-size:14px}
+.word-card .example .en{color:var(--t1);margin-bottom:4px}
+.word-card .example .cn{font-size:13px;color:var(--t2)}
+.word-card .forms{background:#e8f5e9;border-radius:8px;padding:10px;margin:8px 0;font-size:13px;color:#2e7d32}
+.word-card .tip{background:#fff8e1;border-radius:8px;padding:10px;margin:8px 0;font-size:13px;color:#f57f17}
+.word-card .colloc{background:#eef3ff;border-radius:8px;padding:10px;margin:8px 0;font-size:13px;color:#33548c}
+.word-card .colloc .ct{font-weight:600;margin-bottom:4px}
+.word-card .colloc .ci{padding:2px 0;line-height:1.5}
+.use-chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.use-chip{background:var(--pl);color:var(--p);border-radius:14px;padding:4px 10px;font-size:13px;cursor:pointer}
+.use-chip .uc-cn{color:var(--t2);font-size:12px}
+.essay-box{width:100%;min-height:120px;border:1px solid var(--bd);border-radius:8px;padding:10px;font-size:14px;font-family:inherit;line-height:1.6;margin-top:8px;resize:vertical}
+.essay-box:focus{outline:none;border-color:var(--p)}
+.speak-btn{width:36px;height:36px;border-radius:50%;border:none;background:var(--p);color:#fff;font-size:18px;cursor:pointer;vertical-align:middle;margin-left:8px}
+.flip-card{perspective:1000px;width:100%;height:250px;margin:20px 0;cursor:pointer}
+.flip-inner{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+.flip-front,.flip-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:var(--r);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;box-shadow:var(--sh)}
+.flip-front{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.flip-back{background:linear-gradient(135deg,#f093fb,#f5576c);color:#fff;transform:rotateY(180deg)}
+.flip-front .fword{font-size:32px;font-weight:700}.flip-front .fpos{font-size:14px;opacity:.8;margin-top:8px}
+.flip-back .fcn{font-size:28px;font-weight:700}.flip-back .fpos{font-size:14px;opacity:.8;margin-top:8px}
+.letter-grid{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0}
+.letter-btn{width:40px;height:40px;border-radius:8px;border:2px solid var(--p);background:#fff;color:var(--p);font-size:18px;font-weight:700;cursor:pointer;transition:all .2s}
+.letter-btn.used{opacity:.3;pointer-events:none}.letter-btn:active{transform:scale(.9)}
+.answer-area{min-height:50px;border:2px dashed var(--bd);border-radius:8px;padding:10px;margin:12px 0;display:flex;flex-wrap:wrap;gap:4px;justify-content:center;align-items:center}
+.answer-letter{width:36px;height:36px;border-radius:6px;background:var(--p);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;cursor:pointer}
+.match-container{display:flex;gap:16px;margin:16px 0}
+.match-col{flex:1;display:flex;flex-direction:column;gap:8px}
+.match-item{padding:10px;border-radius:8px;border:2px solid var(--bd);text-align:center;font-size:14px;cursor:pointer;transition:all .2s}
+.match-item.selected{border-color:var(--p);background:var(--pl)}
+.match-item.matched{border-color:var(--ok);background:#e6f7e6;opacity:.6;pointer-events:none}
+.match-item.wrong-flash{border-color:var(--no);background:#ffebee}
+.pos-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}
+.pos-opt{padding:14px;border-radius:8px;border:2px solid var(--bd);text-align:center;font-size:15px;cursor:pointer;transition:all .2s;background:#fff}
+.pos-opt:active{transform:scale(.95)}.pos-opt.correct{border-color:var(--ok);background:#e6f7e6}.pos-opt.wrong{border-color:var(--no);background:#ffebee}
+.nav-btns{display:flex;gap:12px;margin-top:16px}.nav-btns .btn{flex:1}
+.achievement-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.achievement{text-align:center;padding:12px 8px;border-radius:var(--r);background:var(--card);box-shadow:var(--sh)}
+.achievement .aicon{font-size:32px}.achievement .aname{font-size:11px;color:var(--t2);margin-top:4px}
+.achievement.locked{opacity:.4;filter:grayscale(1)}
+.group-item{border-bottom:1px solid var(--bd);padding:12px 0}
+.group-header{display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.group-header .gname{font-weight:600}.group-header .gcounts{font-size:13px;color:var(--t2)}
+.group-words{display:none;margin-top:8px;padding-left:8px}.group-words.open{display:block}
+.group-word{display:flex;justify-content:space-between;padding:4px 0;font-size:13px;border-bottom:1px solid #f5f5f5}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:12px 0}
+.cal-header{text-align:center;font-size:12px;color:var(--t3);font-weight:600}
+.cal-day{text-align:center;padding:6px 2px;font-size:12px;border-radius:6px}
+.cal-day.today{border:2px solid var(--p)}.cal-day.checked{background:var(--ok);color:#fff}.cal-day.empty{visibility:hidden}
+.modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center}
+.modal.show{display:flex}
+.modal-content{background:#fff;border-radius:20px;padding:22px;width:90%;max-width:400px;text-align:center;position:relative;max-height:88vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.modal-close{position:absolute;top:8px;right:14px;font-size:24px;line-height:1;color:var(--t3);cursor:pointer;padding:4px}
+.modal-content h3{font-size:18px;margin-bottom:2px}
+.modal-content .btn-primary{background:linear-gradient(135deg,#5b8def,#764ba2);margin-top:8px;box-shadow:0 6px 16px rgba(102,126,234,.35)}
+.modal-content .btn-primary:active{opacity:.9}
+.sum-stats{display:flex;gap:10px;margin:12px 0}
+.sum-stat{flex:1;border-radius:14px;padding:14px 4px 12px;background:var(--bg);border:1px solid rgba(0,0,0,.04)}
+.sum-stat:nth-child(1){background:linear-gradient(180deg,#F2F7FF,#fff)}
+.sum-stat:nth-child(2){background:linear-gradient(180deg,#EDF9F1,#fff)}
+.sum-stat:nth-child(3){background:linear-gradient(180deg,#FDF0F0,#fff)}
+.sum-stat .n{font-size:28px;font-weight:800;line-height:1}
+.sum-stat .l{font-size:12px;color:var(--t3);margin-top:5px}
+.sum-meta{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.sum-chip{background:#fff;border:1px solid var(--bd);border-radius:18px;padding:6px 14px;font-size:13px;color:var(--t2);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.sum-chip b{color:var(--p)}
+.sum-quote{background:var(--pl);color:var(--p);border-radius:12px;padding:12px 14px;font-size:14px;line-height:1.55;margin:12px 0;font-weight:500}
+.sum-list-head{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:14px;margin-bottom:8px;text-align:left}
+.sum-list-head .cnt{font-size:12px;color:var(--p);font-weight:600;background:var(--pl);border-radius:12px;padding:2px 10px}
+.sum-list{max-height:40vh;overflow:auto;-webkit-overflow-scrolling:touch;margin:0 -2px;padding:2px}
+.sum-words{display:flex;flex-wrap:wrap;gap:8px}
+.sw{flex:1 1 calc(33.33% - 8px);min-width:96px;border-radius:12px;padding:9px 11px;cursor:pointer;text-align:left;line-height:1.25;color:var(--t1);border:1px solid rgba(0,0,0,.04);transition:transform .12s,box-shadow .12s}
+.sw:hover{box-shadow:0 3px 10px rgba(0,0,0,.1)}
+.sw:active{transform:scale(.95)}
+.sw .e{font-weight:700;font-size:14px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sw .c{font-size:12px;color:var(--t2);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.sw.c0{background:#EFF4FB}
+.sw.c1{background:#EEF6EE}
+.sw.c2{background:#FBF3E9}
+.sw.c3{background:#FBEEF4}
+.sw.c4{background:#F0EEFB}
+.sw.c5{background:#EAF6F7}
+.section-title{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--t1)}
+.quiz-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.quiz-badge{padding:4px 12px;border-radius:12px;font-size:12px;font-weight:600;color:#fff}
+.quiz-badge.spell{background:#7c4dff}.quiz-badge.matchq{background:#00bfa5}.quiz-badge.posq{background:#ff6d00}
+.fade-in{animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.shake{animation:shake .4s}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.bounce{animation:bounce .4s}@keyframes bounce{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.empty-state{text-align:center;padding:40px 20px;color:var(--t3)}.empty-state .eicon{font-size:48px;margin-bottom:12px}
+</style>
+</head>
+<body>
+<div id="app">
+<div id="page-home" class="page active"></div>
+<div id="page-learn" class="page"></div>
+<div id="page-review" class="page"></div>
+<div id="page-stats" class="page"></div>
+<div id="page-book" class="page"></div>
+</div>
+<div class="tab-bar">
+<div class="tab-item active" data-page="home"><span class="icon">🏠</span>首页</div>
+<div class="tab-item" data-page="learn"><span class="icon">📖</span>学习</div>
+<div class="tab-item" data-page="review"><span class="icon">🔄</span>复习</div>
+<div class="tab-item" data-page="stats"><span class="icon">📊</span>统计</div>
+<div class="tab-item" data-page="book"><span class="icon">📚</span>词库</div>
+</div>
+<div class="modal" id="modal"><div class="modal-content" id="modal-content"></div></div>
+<script>
+// ===== DATA CONVERSION =====
+// ===== WORD DATA (compact format: word|pos|chinese) =====
+var RAW={};
+RAW[1]='able|adj.|能够的/ability|n.|能力/enable|vt.|使能够/about|prep.|关于/above|prep.|在……上面/abroad|adv.|在国外/accept|v.|接受/acceptable|adj.|认可的/acceptance|n.|接受/accident|n.|事故/accidental|adj.|偶然的/accidentally|adv.|偶然地/accurate|adj.|精确的/accurately|adv.|精确地/accuracy|n.|精确/achieve|v.|实现/achievable|adj.|可实现的/achievement|n.|成就/across|prep.|穿过/cross|v.|穿过/act|v.|扮演，行动/activity|n.|活动/actual|adj.|实际的/actually|adv.|事实上/active|adj.|积极的/actively|adv.|积极地/add|v.|加上/addition|n.|增加/additional|adj.|另外的/additionally|adv.|另外/address|n.|地址/adopt|v.|采用，收养/adoptive|adj.|收养的/adoption|n.|收养/advantage|n.|优势/disadvantage|n.|劣势/advertisement|n.|广告/advertise|vt.|做广告/advertiser|n.|广告商/advice|n.|忠告';
+RAW[2]='advise|v.|建议/adviser|n.|顾问/afford|v.|负担得起/afraid|adj.|害怕的/Africa|n.|非洲/African|adj.|非洲的/after|prep.|在……之后/afternoon|n.|下午/again|adv.|再一次/against|prep.|反对/age|n.|年龄/aged|adj.|年老的/agent|n.|代理人/agency|n.|代理机构/ago|adv.|以前/agree|v.|同意/agreeable|adj.|宜人的/agreement|n.|协议/disagree|vi.|不同意/disagreement|n.|分歧/ahead|adv.|在前/aim|n.|目的/air|n.|空气/air-conditioner|n.|空调/airline|n.|航线/airport|n.|机场/alarm|n.|警报/alive|adj.|活着的/all|adj.|全部的/allow|v.|允许/almost|adv.|几乎/alone|adv.|单独/along|prep.|沿着/already|adv.|已经/also|adv.|也/altogether|adv.|总共/always|adv.|总是/amazing|adj.|惊人的/amaze|vt.|使惊奇/amazed|adj.|惊奇的';
+RAW[3]='amazement|n.|惊奇/ambition|n.|雄心/ambitious|adj.|有雄心的/ambitiously|adv.|雄心勃勃地/America|n.|美国/American|adj.|美国的/among|prep.|在……之间/amount|n.|数量/amusing|adj.|有趣的/amuse|vt.|逗乐/amused|adj.|被逗乐的/amusement|n.|娱乐/ancient|adj.|古代的/and|conj.|和/angrily|adv.|生气地/angry|adj.|生气的/animal|n.|动物/another|adj.|另一个/answer|n.|回答/any|adj.|任何的/anything|pron.|任何事/anywhere|adv.|任何地方/apologize|v.|道歉/apology|n.|道歉/apologetic|adj.|歉意的/apologetically|adv.|道歉地/appear|v.|出现/appearance|n.|外貌/disappear|vi.|消失/disappearance|n.|消失/apple|n.|苹果/apply|vt.|应用/applicable|adj.|适用的/application|n.|申请/appliance|n.|电器/applicant|n.|申请人/April|n.|四月/area|n.|地区/argue|v.|争论/argument|n.|争论';
+RAW[4]='arguable|adj.|可论证的/arguably|adv.|可论证地/arm|n.|手臂/army|n.|军队/around|prep.|围绕/arrange|v.|安排/arrangement|n.|安排/arrive|v.|到达/arrival|n.|到达/art|n.|艺术/article|n.|文章/artist|n.|艺术家/as|conj.|当……时/Asia|n.|亚洲/Asian|adj.|亚洲的/ask|v.|问/assistant|n.|助手/assist|vt.|帮助/assistance|n.|帮助/at|prep.|在/the Atlantic|n.|大西洋/attack|v.|攻击/attend|v.|出席/attendance|n.|出勤/attendant|n.|服务员/attract|v.|吸引/attraction|n.|吸引力/attractive|adj.|有吸引力的/audience|n.|观众/August|n.|八月/aunt|n.|阿姨/Australian|n.|澳大利亚人/author|n.|作者/automatic|adj.|自动的/autumn|n.|秋天/available|adj.|可用的/average|n.|平均/award|v.|授予/away|adv.|离开/awful|adj.|可怕的';
+RAW[5]='awe|n.|敬畏/awfully|adv.|非常/baby|n.|婴儿/back|adv.|向后/background|n.|背景/worst|adj.|最糟的/badly|adv.|严重地/bag|n.|包/balance|n.|平衡/balanced|adj.|均衡的/ball|n.|球/balloon|n.|气球/banana|n.|香蕉/bank|n.|银行/bar|n.|酒吧/base|n.|基础/basic|adj.|基本的/basis|n.|基础/basket|n.|篮子/basketball|n.|篮球/bat|n.|球拍/bath|n.|洗澡/bathe|v.|沐浴/battle|n.|战斗/been|v.|是(过去分词)/beach|n.|海滩/bear|n.|熊/beautiful|adj.|美丽的/beautifully|adv.|优美地/beauty|n.|美丽/beautify|v.|美化/because|conj.|因为/bed|n.|床/bedroom|n.|卧室/beer|n.|啤酒/before|prep.|在……之前/beg|v.|请求/beggar|n.|乞丐/begun|v.|开始/beginning|n.|开始';
+RAW[6]='behave|v.|表现/behavior|n.|行为/behind|prep.|在……后面/being|n.|生物/believe|v.|相信/belief|n.|信念/unbelievable|adj.|难以置信的/bell|n.|铃/belong|v.|属于/belongings|n.|财物/below|prep.|在……下面/belt|n.|带/beside|prep.|在……旁边/besides|prep.|除了/best|adj.|最好的/better|adj.|更好的/between|prep.|在……之间/bicycle|n.|自行车/big|adj.|大的/bill|n.|账单/bin|n.|垃圾箱/bird|n.|鸟/birthday|n.|生日/biscuit|n.|饼干/bit|n.|一点/bitten|v.|咬/black|adj.|黑色的/blackboard|n.|黑板/blanket|n.|毯子/blind|adj.|瞎的/block|n.|街区/blown|v.|吹/blue|adj.|蓝色的/board|n.|板/boat|v.|划船/body|n.|身体/boil|v.|煮沸/bone|n.|骨头/book|n.|书/boring|adj.|无聊的';
+RAW[7]='bore|vt.|使厌烦/bored|adj.|无聊的/borrow|v.|借/both|pron.|两者都/bottle|n.|瓶/bottom|n.|底部/bowl|n.|碗/box|n.|盒子/boy|n.|男孩/brain|n.|大脑/brave|adj.|勇敢的/bravely|adv.|勇敢地/bravery|n.|勇敢/bread|n.|面包/breakfast|n.|早餐/breath|n.|呼吸/breathe|v.|呼吸/bridge|n.|桥/brief|adj.|简短的/bright|adj.|明亮的/brightly|adv.|明亮地/Britain|n.|英国/British|adj.|英国的/broadcast|n.|广播/brother|n.|兄弟/brown|adj.|棕色的/brush|n.|刷子/building|n.|建筑/the Bund|n.|外滩/bus|n.|公共汽车/business|n.|商业/businessman|n.|商人/businesswoman|n.|女商人/busy|adj.|忙碌的/busily|adv.|忙碌地/but|conj.|但是/butter|n.|黄油/butterfly|n.|蝴蝶/button|n.|按钮';
+RAW[8]='by|prep.|被/cabbage|n.|卷心菜/cake|n.|蛋糕/calculator|n.|计算器/call|v.|打电话/calm|adj.|平静的/calmly|adv.|平静地/camera|n.|相机/camp|n.|营地/can|v.aux.|能/Canada|n.|加拿大/Canadian|adj.|加拿大的/cancel|v.|取消/candle|n.|蜡烛/cap|n.|帽子/capital|n.|首都/car|n.|汽车/card|n.|卡片/care|n.|关心/careful|adj.|小心的/carefully|adv.|小心地/careless|adj.|粗心的/carrot|n.|胡萝卜/carry|v.|搬运/cartoon|n.|卡通/case|n.|案例/cat|n.|猫/cause|n.|原因/celebrate|v.|庆祝/celebration|n.|庆祝/celebrity|n.|名人/cent|n.|美分/center|n.|中心/central|adj.|中央的/centrally|adv.|在中心/century|n.|世纪/certain|adj.|确定的/certainty|n.|确定/certainly|adv.|当然/chair|n.|椅子';
+RAW[9]='chance|n.|机会/change|v.|改变/exchange|vt.|交换/changeable|adj.|易变的/changeably|adv.|易变地/charge|n.|费用/character|n.|角色/charity|n.|慈善/charitable|adj.|慈善的/charitably|adv.|慈善地/chat|n.|聊天/cheap|adj.|便宜的/check|n.|检查/cheer|v.|欢呼/cheerful|adj.|快乐的/cheerfully|adv.|快乐地/cheese|n.|奶酪/chemical|adj.|化学的/chemistry|n.|化学/chess|n.|国际象棋/chest|n.|胸部/chicken|n.|鸡肉/chief|n.|首领/childhood|n.|童年/childish|adj.|幼稚的/China|n.|中国/Chinese|n.|中文/chocolate|n.|巧克力/choice|n.|选择/chosen|v.|选择/choosy|adj.|挑剔的/Christmas|n.|圣诞节/church|n.|教堂/cigarette|n.|香烟/cinema|n.|电影院/circle|n.|圆圈/citizen|n.|市民/city|n.|城市/clap|v.|拍手/class|n.|班级';
+RAW[10]='classmate|n.|同学/classroom|n.|教室/clean|adj.|干净的/clear|adj.|清楚的/clearly|adv.|清楚地/clerk|n.|职员/clever|adj.|聪明的/climate|n.|气候/climb|v.|爬/clinic|n.|诊所/clock|n.|钟/close|v.|关/clothes|n.|衣服/cloud|n.|云/cloudy|adj.|多云的/coast|n.|海岸/coastline|n.|海岸线/coat|n.|外套/coffee|n.|咖啡/coin|n.|硬币/cold|adj.|冷的/collect|v.|收集/collection|n.|收藏/collective|adj.|集体的/collector|n.|收藏家/college|n.|学院/colour|n.|颜色/colourful|adj.|多彩的/colourless|adj.|无色的/comfortable|adj.|舒适的/comfort|n.|舒适/comfortably|adv.|舒适地/discomfort|n.|不适/uncomfortable|adj.|不舒服的/common|adj.|常见的/uncommon|adj.|不常见的/communicate|vi.|交流/communication|n.|交流/communicative|adj.|健谈的/community|n.|社区';
+RAW[11]='compare|vt.|比较/comparative|adj.|比较的/comparable|adj.|可比较的/comparison|n.|比较/competition|n.|竞争/compete|vi.|比赛/competitive|adj.|竞争的/competitor|n.|竞争者/complain|vi.|抱怨/complaint|n.|抱怨/complete|adj.|完全的/completely|adv.|完全地/completeness|n.|完整/incomplete|adj.|不完整的/computer|n.|电脑/concert|n.|音乐会/conclusion|n.|结论/conclude|vt.|推断/conclusive|adj.|确凿的/conductor|n.|售票员/conduction|n.|传导/conductive|adj.|导电的/conference|n.|会议/confident|adj.|自信的/confidence|n.|信心/confidently|adv.|自信地/confuse|vt.|使困惑/confusing|adj.|令人困惑的/confused|adj.|困惑的/confusion|n.|困惑/congratulation|n.|祝贺/congratulate|vt.|祝贺/connect|vt.|连接/connection|n.|连接/consist|vi.|组成/consistency|n.|一致性/consistent|adj.|一致的/contest|n.|竞赛/continent|n.|大陆';
+RAW[12]='continue|v.|继续/continual|adj.|频繁的/continuous|adj.|连续的/continuity|n.|连续性/control|v.|控制/convenient|adj.|方便的/convenience|n.|方便/inconvenient|adj.|不便的/conversation|n.|对话/cook|n.|厨师/cool|adj.|凉爽的/coolly|adv.|冷淡地/coolness|n.|凉爽/copy|n.|副本/corner|n.|角落/correct|adj.|正确的/correctly|adv.|正确地/cost|v.|花费/costly|adj.|昂贵的/cotton|n.|棉花/cough|v.|咳嗽/count|v.|数/countable|adj.|可数的/countless|adj.|无数的/country|n.|国家/couple|n.|一对/course|n.|课程/cousin|n.|堂兄弟/cover|v.|覆盖/cow|n.|母牛/crazy|adj.|疯狂的/craziness|n.|疯狂/crazily|adv.|疯狂地/create|v.|创造/creation|n.|创造/creative|adj.|有创造力的/creativity|n.|创造力/creature|n.|生物/creator|n.|创造者/crossing|n.|十字路口';
+RAW[13]='crowded|adj.|拥挤的/crowd|n.|人群/cry|v.|哭/culture|n.|文化/cultural|adj.|文化的/cultivate|vt.|培养/cup|n.|杯子/custom|n.|风俗/customary|adj.|习惯的/customer|n.|顾客/customs|n.|海关/cut|v.|切/cycle|v.|骑车/daily|adj.|每天的/damage|v.|损害/dance|v.|跳舞/danger|n.|危险/dangerous|adj.|危险的/endanger|vt.|危及/dark|adj.|黑暗的/date|n.|日期/daughter|n.|女儿/day|n.|天/dead|adj.|死的/die|vi.|死亡/death|n.|死亡/deadly|adj.|致命的/dear|adj.|亲爱的/debate|n.|辩论/debatable|adj.|有争议的/December|n.|十二月/decide|v.|决定/decision|n.|决定/decisive|adj.|决定性的/decorate|v.|装饰/decoration|n.|装饰/decorative|adj.|装饰的/deep|adj.|深的/deeply|adv.|深深地/depth|n.|深度';
+RAW[14]='deepen|v.|加深/degree|n.|程度/delay|n.|延误/delicious|adj.|美味的/deliciously|adv.|美味地/deliver|v.|递送/delivery|n.|递送/dentist|n.|牙医/deny|vt.|否认/departure|n.|出发/depend|v.|依靠/dependence|n.|依赖/dependent|adj.|依赖的/independent|adj.|独立的/independently|adv.|独立地/describe|v.|描述/description|n.|描述/descriptive|adj.|描写的/desert|n.|沙漠/deserve|v.|值得/design|v.|设计/designer|n.|设计师/desk|n.|书桌/destroy|v.|摧毁/detail|n.|细节/detailed|adj.|详细的/detective|n.|侦探/develop|v.|发展/developing|adj.|发展中的/developed|adj.|发达的/development|n.|发展/dialogue|n.|对话/diary|n.|日记/dictionary|n.|词典/diet|n.|饮食/difference|n.|区别/different|adj.|不同的/differently|adv.|不同地/differ|v.|不同/difficult|adj.|困难的';
+RAW[15]='difficulty|n.|困难/difficultly|adv.|困难地/dining-room|n.|餐厅/dinner|n.|晚餐/dine|vi.|用餐/direction|n.|方向/direct|adj.|直接的/directly|adv.|直接地/dirty|adj.|脏的/dirt|n.|污物/disappoint|vt.|使失望/disappointing|adj.|令人失望的/disappointed|adj.|失望的/discover|v.|发现/discovery|n.|发现/discuss|v.|讨论/discussion|n.|讨论/dish|n.|盘子/dishonest|adj.|不诚实的/dislike|v.|不喜欢/display|n.|展示/distance|n.|距离/distant|adj.|遥远的/disturb|vt.|打扰/disturbance|n.|干扰/divide|v.|除/division|n.|除法/divisible|adj.|可整除的/doctor|n.|医生/dog|n.|狗/dollar|n.|美元/door|n.|门/down|adv.|向下/downstairs|adv.|楼下/dream|n.|梦想/dress|n.|连衣裙/drive|v.|驾驶/driver|n.|司机/dry|adj.|干的/duck|n.|鸭子';
+RAW[16]='dull|adj.|乏味的/dumpling|n.|饺子/during|prep.|在……期间/duration|n.|持续时间/duty|n.|责任/each|adj.|每个/eager|adj.|渴望的/ear|n.|耳朵/early|adj.|早的/earth|n.|地球/earthly|adj.|尘世的/earthy|adj.|泥土的/easily|adv.|容易地/east|n.|东方/easy|adj.|容易的/ease|n.|舒适/economy|n.|经济/economic|adj.|经济的/economical|adj.|节约的/economics|n.|经济学/economist|n.|经济学家/education|n.|教育/educational|adj.|教育的/educate|vt.|教育/effect|n.|效果/effective|adj.|有效的/effectively|adv.|有效地/efficient|adj.|高效的/efficiency|n.|效率/efficiently|adv.|高效地/effort|n.|努力/egg|n.|蛋/either|adj.|任一方的/elder|adj.|年长的/electric|adj.|电的/electricity|n.|电/electronic|adj.|电子的/elementary|adj.|初级的/elephant|n.|大象/else|adj.|其他的';
+RAW[17]='embarrassed|adj.|尴尬的/embarrassing|adj.|令人尴尬的/embarrass|vt.|使尴尬/embarrassment|n.|尴尬/empty|adj.|空的/emptily|adv.|空虚地/emptiness|n.|空虚/encourage|v.|鼓励/courage|n.|勇气/courageous|adj.|勇敢的/discourage|vt.|使气馁/encouragement|n.|鼓励/end|n.|结束/enemy|n.|敌人/energy|n.|能量/energetic|adj.|精力充沛的/energize|vt.|使有活力/engine|n.|引擎/engineer|n.|工程师/England|n.|英格兰/English|n.|英语/enjoy|v.|享受/enjoyable|adj.|愉快的/enjoyment|n.|乐趣/enough|adj.|足够的/enrich|v.|使丰富/rich|adj.|富有的/enrichment|n.|丰富/enter|v.|进入/entrance|n.|入口/entry|n.|词条/envelope|n.|信封/environment|n.|环境/environmental|adj.|环境的/environmentalist|n.|环保主义者/equal|v.|等于/equality|n.|平等/equally|adv.|平等地/escape|v.|逃跑/especially|adv.|尤其';
+RAW[18]='estate|n.|房产/Europe|n.|欧洲/European|adj.|欧洲的/eve|n.|前夕/even|adv.|甚至/evening|n.|傍晚/event|n.|事件/eventual|adj.|最终的/eventually|adv.|最终/ever|adv.|曾经/every|adj.|每个/everyday|adj.|日常的/everything|pron.|一切/everywhere|adv.|到处/exactly|adv.|确切地/exact|adj.|确切的/exam|n.|考试/examine|v.|检查/examiner|n.|考官/examinee|n.|应试者/expect|v.|期望/expectant|adj.|期待的/expectation|n.|期望/expense|n.|费用/example|n.|例子/excellent|adj.|优秀的/excel|vi.|擅长/excellence|n.|卓越/except|prep.|除了/exception|n.|例外/exchangeable|adj.|可交换的/excited|adj.|兴奋的/excite|vt.|使激动/exciting|adj.|令人兴奋的/excitement|n.|兴奋/excuse|v.|原谅/exercise|n.|锻炼/exhibition|n.|展览/exhibit|vt.|展出/exit|n.|出口';
+RAW[19]='expensive|adj.|昂贵的/experience|n.|经验/experienced|adj.|有经验的/experiment|n.|实验/experimental|adj.|实验的/explain|v.|解释/explanation|n.|解释/explanatory|adj.|解释性的/explore|v.|探索/exploration|n.|探索/express|vt.|表达/extend|v.|延伸/extension|n.|延伸/extensible|adj.|可扩展的/extensive|adj.|广泛的/extent|n.|程度/eye|n.|眼睛/fable|n.|寓言/face|n.|脸/facial|adj.|面部的/fact|n.|事实/factual|adj.|事实的/factually|adv.|真实地/factory|n.|工厂/fail|v.|失败/failure|n.|失败/fair|adj.|公平的/unfair|adj.|不公平的/fairly|adv.|公平地/familiar|adj.|熟悉的/familiarity|n.|熟悉/familiarize|vt.|使熟悉/family|n.|家庭/famous|adj.|著名的/fan|n.|粉丝/farm|n.|农场/farmer|n.|农民/fashion|n.|时尚/fashionable|adj.|时尚的/fast|adj.|快的';
+RAW[20]='fat|adj.|胖的/father|n.|父亲/favour|n.|恩惠/favourable|adj.|有利的/favourite|adj.|最喜欢的/fax|n.|传真/fear|n.|恐惧/fearful|adj.|害怕的/fearless|adj.|无畏的/February|n.|二月/female|n.|女性/fence|n.|围栏/ferry|n.|渡轮/festival|n.|节日/fetch|v.|取来/fever|n.|发烧/feverish|adj.|发烧的/few|pron.|少数/field|n.|田地/figure|n.|数字/fill|v.|装满/film|n.|电影/final|adj.|最终的/finally|adv.|最终/fine|adj.|好的/finger|n.|手指/finish|v.|完成/fire|n.|火/fireman|n.|消防员/firework|n.|烟花/first|adj.|第一的/fish|n.|鱼/fisherman|n.|渔夫/fix|v.|修理/flag|n.|旗帜/flash|n.|闪光/flashy|adj.|浮华的/flat|n.|公寓/flight|n.|航班/flood|n.|洪水';
+RAW[21]='flower|n.|花/focus|v.|集中/fog|n.|雾/follow|v.|跟随/following|adj.|接下来的/fond|adj.|喜爱的/food|n.|食物/fool|n.|傻瓜/foolish|adj.|愚蠢的/football|n.|足球/for|prep.|为了/forecast|n.|预报/foreign|adj.|外国的/foreigner|n.|外国人/forest|n.|森林/forever|adv.|永远/forgetful|adj.|健忘的/forgetfulness|n.|健忘/fork|n.|叉/form|n.|形式/formal|adj.|正式的/formally|adv.|正式地/formation|n.|形成/forward|adv.|向前/fountain|n.|喷泉/France|n.|法国/free|adj.|自由的/freedom|n.|自由/freezing|adj.|冰冻的/frozen|adj.|冷冻的/French|adj.|法国的/Frenchman|n.|法国人/fresh|adj.|新鲜的/Friday|n.|星期五/fridge|n.|冰箱/friend|n.|朋友/friendly|adj.|友好的/friendliness|n.|友善/friendship|n.|友谊/frighten|v.|使害怕';
+RAW[22]='fright|n.|惊吓/frightened|adj.|受惊的/frightening|adj.|可怕的/from|prep.|从/front|n.|前面/frontal|adj.|正面的/fruit|n.|水果/fry|v.|煎/fuel|n.|燃料/full|adj.|满的/fun|n.|乐趣/funny|adj.|有趣的/furniture|n.|家具/fur|n.|毛皮/future|n.|未来/gain|v.|获得/game|n.|游戏/garden|n.|花园/gardening|n.|园艺/gardener|n.|园丁/gas|n.|气体/gate|n.|大门/generally|adv.|通常/general|adj.|一般的/generalize|vi.|概括/generation|n.|一代/gentle|adj.|温柔的/gentleman|n.|绅士/generous|adj.|慷慨的/generosity|n.|慷慨/gently|adv.|温柔地/geography|n.|地理/German|adj.|德国的/Germany|n.|德国/girl|n.|女孩/glad|adj.|高兴的/glass|n.|玻璃/global|adj.|全球的/globe|n.|地球/globally|adv.|全球地';
+RAW[23]='globalize|vt.|使全球化/globalization|n.|全球化/glove|n.|手套/goal|n.|目标/God|n.|上帝/gold|n.|金/golden|adj.|金色的/government|n.|政府/govern|vt.|统治/governmental|adj.|政府的/grade|n.|年级/graduate|v.|毕业/graduation|n.|毕业/grandfather|n.|祖父/grandmother|n.|祖母/grass|n.|草/great|adj.|伟大的/green|adj.|绿色的/ground|n.|地面/group|n.|组/growth|n.|增长/guess|v.|猜测/guest|n.|客人/guide|n.|指南/guidance|n.|指导/guidelines|n.|指导方针/gun|n.|枪/habit|n.|习惯/hair|n.|头发/half|n.|一半/hall|n.|大厅/hamburger|n.|汉堡/hand|n.|手/happen|v.|发生/happily|adv.|快乐地/happy|adj.|快乐的/happiness|n.|幸福/harbour|n.|港口/hard|adj.|困难的/harden|v.|变硬';
+RAW[24]='hardly|adv.|几乎不/hardworking|adj.|勤奋的/harmful|adj.|有害的/harm|n.|伤害/harmless|adj.|无害的/hat|n.|帽子/hate|v.|恨/head|n.|头/headache|n.|头痛/headline|n.|标题/headmaster|n.|校长/health|n.|健康/heal|v.|治愈/healthy|adj.|健康的/heart|n.|心/hearty|adj.|热诚的/heartless|adj.|无情的/heat|n.|热/heated|adj.|激烈的/heater|n.|加热器/heavily|adv.|大量地/heavy|adj.|重的/height|n.|高度/high|adj.|高的/heighten|vt.|提高/help|v.|帮助/helpful|adj.|有帮助的/helpless|adj.|无助的/here|adv.|这里/hesitate|v.|犹豫/hesitation|n.|犹豫/hesitant|adj.|犹豫的/hill|n.|山/historical|adj.|历史的/history|n.|历史/hit|v.|打击/hobby|n.|爱好/hole|n.|洞/holiday|n.|假期/home|n.|家';
+RAW[25]='homeless|adj.|无家可归的/homework|n.|作业/honest|adj.|诚实的/honesty|n.|诚实/honestly|adv.|诚实地/honey|n.|蜂蜜/honour|n.|荣誉/honorable|adj.|光荣的/hope|v.|希望/hopeful|adj.|有希望的/hopeless|adj.|绝望的/hopefully|adv.|有希望地/horrible|adj.|可怕的/horror|n.|恐怖/horrify|vt.|使恐惧/horse|n.|马/hospital|n.|医院/host|n.|主人/hostess|n.|女主人/hot|adj.|热的/hotel|n.|旅馆/hour|n.|小时/hourly|adj.|每小时的/house|n.|房子/housework|n.|家务/how|adv.|怎样/however|adv.|然而/huge|adj.|巨大的/human|adj.|人类的/humour|n.|幽默/humourous|adj.|幽默的/hungrily|adv.|饥饿地/hungry|adj.|饥饿的/hunger|n.|饥饿/hunt|v.|打猎/hunter|n.|猎人/hurry|v.|赶紧/hurt|v.|伤害/husband|n.|丈夫/hut|n.|小屋';
+RAW[26]='ice|n.|冰/icecream|n.|冰淇淋/idea|n.|想法/if|conj.|如果/ill|adj.|生病的/illness|n.|疾病/imagine|vt.|想象/imagination|n.|想象力/imaginative|adj.|有想象力的/imaginable|adj.|可想象的/imaginary|adj.|虚构的/immediately|adv.|立即/importance|n.|重要性/important|adj.|重要的/importantly|adv.|重要地/impossible|adj.|不可能的/impossibly|adv.|不可能地/impossibility|n.|不可能/impression|n.|印象/impress|vt.|给……印象/impressive|adj.|印象深刻的/improve|v.|改善/improvement|n.|改进/in|prep.|在……内/inch|n.|英寸/include|v.|包括/inclusion|n.|包含/inclusive|adj.|包含的/including|prep.|包括/included|adj.|包括的/income|n.|收入/increase|v.|增加/indeed|adv.|确实/independence|n.|独立/India|n.|印度/individual|adj.|个人的/individually|adv.|各自地/individualize|vt.|使个性化/indoor|adj.|室内的/information|n.|信息';
+RAW[27]='ink|n.|墨水/inside|prep.|在……里面/instead|adv.|代替/interest|n.|兴趣/interested|adj.|感兴趣的/interesting|adj.|有趣的/uninterested|adj.|不感兴趣的/disinterested|adj.|公正的/international|adj.|国际的/Internet|n.|互联网/interview|v.|采访/interviewee|n.|受访者/interviewer|n.|采访者/into|prep.|进入/introduce|v.|介绍/introduction|n.|介绍/invent|v.|发明/invention|n.|发明/inventor|n.|发明家/invitation|n.|邀请/invite|v.|邀请/iron|n.|铁/island|n.|岛屿/Italian|adj.|意大利的/Italy|n.|意大利/item|n.|项目/jacket|n.|夹克/jam|n.|果酱/January|n.|一月/Japan|n.|日本/Japanese|adj.|日本的/jeans|n.|牛仔裤/job|n.|工作/join|v.|加入/joke|n.|笑话/journey|n.|旅行/joy|n.|快乐/investigation|n.|调查/investigator|n.|调查员/judge|n.|法官';
+RAW[28]='judgement|n.|判断/juice|n.|果汁/July|n.|七月/jump|v.|跳/June|n.|六月/junior|adj.|初级的/just|adv.|刚刚/keen|adj.|热衷的/key|n.|钥匙/keyboard|n.|键盘/kick|v.|踢/kid|n.|小孩/kill|v.|杀死/kilo|n.|公斤/kilometre|n.|公里/kind|adj.|善良的/kindness|n.|善良/unkind|adj.|不友善的/kindergarten|n.|幼儿园/king|n.|国王/kitchen|n.|厨房/kite|n.|风筝/knock|v.|敲/knowledge|n.|知识/knowledgeable|adj.|博学的/lab|n.|实验室/lady|n.|女士/lake|n.|湖/lamp|n.|灯/land|n.|陆地/language|n.|语言/lantern|n.|灯笼/large|adj.|大的/last|adj.|最后的/late|adj.|迟的/later|adv.|后来/laugh|v.|笑/laughter|n.|笑声/law|n.|法律/lawyer|n.|律师';
+RAW[29]='laid|v.|放置/lazy|adj.|懒惰的/lazily|adv.|懒散地/laziness|n.|懒惰/learn|v.|学习/learner|n.|学习者/lecture|n.|讲座/lecturer|n.|讲师/left|adj.|左边的/leg|n.|腿/lend|vt.|借出/length|n.|长度/long|adj.|长的/lesson|n.|课/let|vt.|让/letter|n.|信/level|n.|水平/librarian|n.|图书管理员/library|n.|图书馆/licence|n.|许可证/lift|vt.|举起/light|n.|光/like|vt.|喜欢/likely|adj.|可能的/unlike|prep.|不像/line|n.|线/link|vt.|连接/lion|n.|狮子/liquid|n.|液体/list|n.|清单/listen|vi.|听/live|vi.|生活/local|adj.|当地的/locate|vt.|定位/location|n.|位置/lock|n.|锁/London|n.|伦敦/lonely|adj.|孤独的/lengthen|v.|加长/lengthy|adj.|冗长的';
+RAW[30]='look|vi.|看/lost|adj.|丢失的/lot|n.|许多/loud|adj.|响亮的/loudly|adv.|大声地/love|n.|爱/lovely|adj.|可爱的/low|adj.|低的/luck|n.|运气/lucky|adj.|幸运的/luckily|adv.|幸运地/luggage|n.|行李/lunch|n.|午餐/machine|n.|机器/mad|adj.|疯狂的/madam|n.|夫人/magazine|n.|杂志/magic|n.|魔法/magician|n.|魔术师/main|adj.|主要的/mainly|adv.|主要地/major|adj.|主要的/male|adj.|男性的/mall|n.|商场/manage|vt.|管理/management|n.|管理/manager|n.|经理/manageable|adj.|可应对的/manners|n.|礼貌/map|n.|地图/March|n.|三月/mark|n.|分数/market|n.|市场/marry|v.|结婚/married|adj.|已婚的/marriage|n.|婚姻/match|n.|比赛/material|n.|材料/maths|n.|数学/matter|n.|事情';
+RAW[31]='May|n.|五月/maybe|adv.|也许/meal|n.|一餐/meaning|n.|意思/meaningful|adj.|有意义的/meat|n.|肉/medical|adj.|医学的/medicine|n.|药/medium|adj.|中等的/meeting|n.|会议/member|n.|成员/membership|n.|会员资格/memory|n.|记忆/memorize|vt.|记住/memorable|adj.|难忘的/memorial|adj.|纪念的/mention|vt.|提到/menu|n.|菜单/message|n.|消息/messenger|n.|信使/metal|n.|金属/method|n.|方法/metre|n.|米/metres|n.|米(复数)/middle|n.|中间/mile|n.|英里/milk|n.|牛奶/mind|n.|头脑/minus|prep.|减/minute|n.|分钟/mirror|n.|镜子/miss|vt.|想念/mistake|n.|错误/mix|vt.|混合/mixture|n.|混合物/model|n.|模型/modern|adj.|现代的/moment|n.|片刻/Monday|n.|星期一/money|n.|钱';
+RAW[32]='monitor|n.|班长/monkey|n.|猴子/month|n.|月/moon|n.|月亮/more|adj.|更多的/morning|n.|早晨/most|adj.|最多的/mother|n.|母亲/motor|n.|马达/motorcycle|n.|摩托车/mountain|n.|山/mountainous|adj.|多山的/mouse|n.|老鼠/mouth|n.|嘴/move|v.|移动/movie|n.|电影/Mr|n.|先生/Mrs|n.|夫人/museum|n.|博物馆/music|n.|音乐/musical|adj.|音乐的/musician|n.|音乐家/must|v.aux.|必须/name|n.|名字/narrow|adj.|狭窄的/nation|n.|民族/national|adj.|国家的/nationality|n.|国籍/native|adj.|本土的/natural|adj.|自然的/nature|n.|自然/naturally|adv.|自然地/naughty|adj.|淘气的/near|prep.|在……附近/nearby|adj.|附近的/nearly|adv.|几乎/necessary|adj.|必要的/necessity|n.|必需/necessarily|adv.|必然地/need|v.|需要';
+RAW[33]='neighbour|n.|邻居/neighbourhood|n.|街区/nervous|adj.|紧张的/nervously|adv.|紧张地/nervousness|n.|紧张/net|n.|网/network|n.|网络/never|adv.|从不/new|adj.|新的/news|n.|新闻/newspaper|n.|报纸/next|adj.|下一个的/nice|adj.|美好的/night|n.|夜晚/no|adj.|没有/nobody|pron.|没有人/noise|n.|噪音/noisy|adj.|嘈杂的/none|pron.|没有一个/noodle|n.|面条/nor|conj.|也不/north|n.|北方/nose|n.|鼻子/not|adv.|不/note|n.|笔记/nothing|pron.|没有什么/notice|n.|通知/novel|n.|小说/November|n.|十一月/now|adv.|现在/nowadays|adv.|如今/number|n.|数字/nurse|n.|护士/obey|vt.|服从/observe|vt.|观察/observation|n.|观察/observer|n.|观察员/observant|adj.|观察力强的/occupation|n.|职业/ocean|n.|海洋';
+RAW[34]='October|n.|十月/of|prep.|的/off|vt.|离开/offer|vt.|提供/office|n.|办公室/officer|n.|官员/official|adj.|官方的/often|adv.|经常/oil|n.|油/old|adj.|老的/Olympic|adj.|奥林匹克的/on|prep.|在……上/once|adv.|一次/one|pron.|一个/only|adv.|只/online|adj.|在线的/onto|prep.|到……上/open|v.|打开/operate|v.|操作/operation|n.|手术/operational|adj.|可操作的/opinion|n.|观点/opposite|adj.|对面的/or|conj.|或者/orange|n.|橙子/ordinary|adj.|普通的/organization|n.|组织/organized|adj.|有组织的/organize|vt.|组织/other|adj.|其他的/out|adv.|出/outdoor|adj.|户外的/outdoors|adv.|在户外/outside|prep.|在……外面/oven|n.|烤箱/over|prep.|在……上方/own|adj.|自己的/owner|n.|所有者/ownership|n.|所有权/the Pacific|n.|太平洋';
+RAW[35]='pack|n.|包/page|n.|页/pain|n.|疼痛/painful|adj.|疼痛的/painless|adj.|无痛的/paint|vt.|画/painter|n.|画家/painting|n.|画/pair|n.|一双/palace|n.|宫殿/pale|adj.|苍白的/panda|n.|熊猫/paper|n.|纸/parent|n.|父母/Paris|n.|巴黎/park|n.|公园/part|n.|部分/partner|n.|伙伴/party|n.|聚会/pass|vt.|通过/passage|n.|通道/passenger|n.|乘客/passport|n.|护照/past|prep.|过/patient|n.|病人/impatient|adj.|不耐烦的/patience|n.|耐心/peace|n.|和平/peaceful|adj.|和平的/peacefully|adv.|平静地/peach|n.|桃子/pear|n.|梨/pen|n.|钢笔/pencil|n.|铅笔/penny|n.|便士/people|n.|人们/per|prep.|每/percent|n.|百分比/perfect|adj.|完美的/performance|n.|表现';
+RAW[36]='perform|v.|表演/performer|n.|表演者/perhaps|adv.|也许/person|n.|人/personal|adj.|个人的/personality|n.|个性/pet|n.|宠物/phone|n.|电话/photo|n.|照片/physical|adj.|身体的/physics|n.|物理/physically|adv.|身体上/piano|n.|钢琴/pianist|n.|钢琴家/pick|vt.|挑选/picnic|n.|野餐/picture|n.|图片/piece|n.|块/pig|n.|猪/pilot|n.|飞行员/pin|n.|针/pineapple|n.|菠萝/pink|adj.|粉红色的/pioneer|n.|先驱/pity|n.|怜悯/pitiful|adj.|可怜的/pizza|n.|比萨/place|n.|地方/plan|v.|计划/plane|n.|飞机/planet|n.|行星/plastic|adj.|塑料的/plate|n.|盘子/platform|n.|站台/play|v.|玩/playground|n.|操场/pleasant|adj.|令人愉快的/pleased|adj.|高兴的/please|v.|请/pleasure|n.|快乐';
+RAW[37]='plenty|n.|丰富/plot|n.|情节/plus|prep.|加/pocket|n.|口袋/poem|n.|诗/poet|n.|诗人/point|v.|指向/pole|n.|杆/policeman|n.|警察/politely|adv.|有礼貌地/polite|adj.|有礼貌的/politics|n.|政治/pollute|vt.|污染/pollution|n.|污染/pool|n.|水池/poor|adj.|贫穷的/popular|adj.|流行的/popularly|adv.|广泛地/popularity|n.|流行/population|n.|人口/populate|vt.|居住于/populous|adj.|人口稠密的/pork|n.|猪肉/possible|adj.|可能的/possibly|adv.|可能地/post|n.|邮政/postcard|n.|明信片/postman|n.|邮递员/pot|n.|锅/potato|n.|土豆/pound|n.|英镑/power|n.|力量/powerful|adj.|强大的/powerfully|adv.|强大地/practice|n.|练习/practical|adj.|实际的/practically|adv.|实际上/praise|vt.|表扬/precious|adj.|珍贵的/predict|vt.|预言';
+RAW[38]='predictable|adj.|可预测的/prediction|n.|预测/predictor|n.|预测器/prefer|vt.|更喜欢/preferable|adj.|更好的/preference|n.|偏好/prepare|vt.|准备/preparation|n.|准备/present|n.|礼物/president|n.|总统/press|vt.|按/pressure|n.|压力/pretend|vt.|假装/pretty|adj.|漂亮的/prevent|vt.|防止/price|n.|价格/primary|adj.|初级的/print|vt.|印刷/prison|n.|监狱/prisoner|n.|囚犯/private|adj.|私人的/prize|n.|奖品/probably|adv.|可能/problem|n.|问题/process|vt.|处理/produce|vt.|生产/product|n.|产品/producer|n.|生产者/production|n.|生产/professional|adj.|专业的/programme|n.|节目/progress|n.|进步/project|n.|项目/projector|n.|投影仪/projection|n.|投射/promise|v.|承诺/promising|adj.|有前途的/pronounce|vt.|发音/pronunciation|n.|发音/pronounceable|adj.|可发音的';
+RAW[39]='pronouncement|n.|声明/properly|adv.|适当地/proper|adj.|适当的/protect|vt.|保护/protector|n.|保护者/protection|n.|保护/protective|adj.|保护的/proud|adj.|自豪的/pride|n.|骄傲/prove|v.|证明/proof|n.|证据/provide|vt.|提供/public|adj.|公共的/publicize|vt.|宣传/publish|vt.|出版/publication|n.|出版物/pull|vt.|拉/pump|vt.|抽水/pupil|n.|学生/purpose|n.|目的/purposeful|adj.|有目的的/purposeless|adj.|无目的的/push|vt.|推/put|v.|放/quarter|n.|四分之一/queen|n.|王后/question|n.|问题/questionable|adj.|可疑的/quick|adj.|快的/quickly|adv.|快速地/quiet|adj.|安静的/quietly|adv.|安静地/quietness|n.|安静/quite|adv.|相当/quiz|n.|测验/race|v.|赛跑/racial|adj.|种族的/radio|n.|收音机/railway|n.|铁路/rain|n.|雨';
+RAW[40]='rainy|adj.|多雨的/raise|vt.|举起/rarely|adv.|很少/rather|adv.|相当/reach|vt.|到达/ready|adj.|准备好的/readily|adv.|乐意地/readiness|n.|准备就绪/real|adj.|真实的/realize|v.|意识到/really|adv.|真正地/realization|n.|实现/reality|n.|现实/realistic|adj.|现实的/realistically|adv.|现实地/reason|n.|理由/reasonable|adj.|合理的/receive|vt.|收到/recent|adj.|最近的/recently|adv.|最近/recognize|v.|认出/recognization|n.|认可/record|n.|记录/recorder|n.|录音机/red|adj.|红色的/reduce|v.|减少/reduction|n.|减少/refer|vi.|参考/reference|n.|参考/referee|n.|裁判/refuse|vt.|拒绝/refusal|n.|拒绝/irregular|adj.|不规则的/regularly|adv.|定期地/relative|n.|亲戚/relate|v.|相关/related|adj.|相关的/relation|n.|关系/relationship|n.|关系/relax|v.|放松';
+RAW[41]='relaxing|adj.|轻松的/relaxed|adj.|放松的/relaxation|n.|放松/rely|vi.|依赖/reliable|adj.|可靠的/reliance|n.|依赖/remember|v.|记得/repair|vt.|修理/repeat|vt.|重复/reply|vi.|回答/report|n.|报告/reporter|n.|记者/republic|n.|共和国/require|v.|要求/requirement|n.|要求/research|v.|研究/resource|n.|资源/response|n.|回应/responsible|adj.|负责的/responsibility|n.|责任/rest|n.|休息/restaurant|n.|餐厅/result|n.|结果/retired|adj.|退休的/retirement|n.|退休/return|v.|返回/reuse|vt.|重复使用/review|vt.|复习/revision|n.|复习/rice|n.|米饭/rid|vt.|摆脱/right|adj.|正确的/rise|vi.|上升/river|n.|河流/road|n.|路/roast|vt.|烤/rob|vt.|抢劫/robber|n.|强盗/robbery|n.|抢劫/robot|n.|机器人';
+RAW[42]='rock|n.|岩石/rocky|adj.|多石的/room|n.|房间/root|n.|根/rope|n.|绳子/round|adj.|圆的/rough|adj.|粗糙的/row|n.|排/rubbish|n.|垃圾/rule|n.|规则/ruler|n.|尺子/rush|v.|冲/sad|adj.|悲伤的/sadly|adv.|悲伤地/safe|adj.|安全的/safely|adv.|安全地/safety|n.|安全/sail|v.|航行/salad|n.|沙拉/salary|n.|工资/sale|n.|出售/sell|vt.|卖/salt|n.|盐/same|adj.|相同的/sandwich|n.|三明治/satisfied|adj.|满意的/satisfy|vt.|使满意/Saturday|n.|星期六/sauce|n.|酱汁/save|vt.|拯救/saying|n.|谚语/school|n.|学校/science|n.|科学/scientific|adj.|科学的/scientist|n.|科学家/score|n.|分数/screen|n.|屏幕/sea|n.|海/seafood|n.|海鲜/search|v.|搜寻';
+RAW[43]='seaside|n.|海边/season|n.|季节/seasonal|adj.|季节的/seat|n.|座位/second|n.|第二/secondary|adj.|中等的/secret|n.|秘密/secretary|n.|秘书/section|n.|部分/seem|vi.|似乎/seldom|adv.|很少/select|vt.|选择/selection|n.|选择/selective|adj.|选择性的/senior|adj.|高级的/sense|n.|感觉/sensible|adj.|明智的/sensitive|adj.|敏感的/sentence|n.|句子/September|n.|九月/series|n.|系列/seriously|adv.|严重地/serious|adj.|严重的/serve|v.|服务/servant|n.|仆人/service|n.|服务/set|v.|放置/settlement|n.|解决/settler|n.|定居者/several|adj.|几个/sex|n.|性别/shame|n.|羞耻/shameful|adj.|可耻的/shameless|adj.|无耻的/shape|n.|形状/share|vt.|分享/sharp|adj.|锋利的/sharpen|vt.|使锋利/sharply|adv.|锋利地/sheep|n.|羊';
+RAW[44]='shelf|n.|架子/ship|n.|船/shirt|n.|衬衫/shoe|n.|鞋/shop|n.|商店/short|adj.|短的/shortage|n.|短缺/shortly|adv.|不久/should|v.aux.|应该/shout|vi.|喊/shower|n.|淋浴/shut|vt.|关闭/shy|adj.|害羞的/sick|adj.|生病的/sickness|n.|疾病/sicken|vt.|使生病/side|n.|旁边/sight|n.|视力/sightseeing|n.|观光/sign|n.|标志/signal|n.|信号/silent|adj.|沉默的/silence|n.|沉默/silly|adj.|愚蠢的/simple|adj.|简单的/simply|adv.|简单地/simplify|vt.|简化/since|conj.|自从/singer|n.|歌手/single|adj.|单一的/sir|n.|先生/sister|n.|姐妹/situation|n.|情况/size|n.|大小/skate|vi.|滑冰/skill|n.|技能/skillful|adj.|熟练的/skin|n.|皮肤/skirt|n.|裙子/sky|n.|天空';
+RAW[45]='asleep|adj.|睡着的/sleepy|adj.|困的/slow|adj.|慢的/slowly|adv.|慢慢地/small|adj.|小的/smart|adj.|聪明的/smile|vi.|微笑/smoke|n.|烟/snack|n.|零食/snow|n.|雪/snowy|adj.|下雪的/so|adv.|如此/society|n.|社会/social|adj.|社会的/socialize|vi.|社交/sociable|adj.|好交际的/soft|adj.|柔软的/softly|adv.|温柔地/soldier|n.|士兵/solution|n.|解决方案/solve|vt.|解决/some|adj.|一些/something|pron.|某事/sometimes|adv.|有时/son|n.|儿子/song|n.|歌曲/soon|adv.|不久/sorry|adj.|抱歉的/sound|n.|声音/soup|n.|汤/south|n.|南方/southern|adj.|南方的/spaceship|n.|宇宙飞船/spare|adj.|多余的/speech|n.|演讲/speaker|n.|演讲者/special|adj.|特殊的/speak|v.|说话/speechless|adj.|无语的/spoon|n.|勺子';
+RAW[46]='sport|n.|运动/spread|vt.|展开/spring|n.|春天/square|n.|广场/staff|n.|员工/stamp|n.|邮票/start|n.|开始/state|n.|州/station|n.|车站/stay|vi.|停留/steak|n.|牛排/steam|n.|蒸汽/step|n.|步骤/still|adv.|仍然/stocking|n.|长袜/stomach-ache|n.|胃痛/stone|n.|石头/stop|vt.|停止/store|n.|商店/storm|n.|暴风雨/story|n.|故事/straight|adj.|直的/strange|adj.|奇怪的/stranger|n.|陌生人/street|n.|街道/stress|n.|压力/strict|adj.|严格的/strong|adj.|强壮的/strongly|adv.|强烈地/strength|n.|力量/strengthen|vt.|加强/stuck|adj.|卡住的/student|n.|学生/study|v.|学习/stupid|adj.|愚蠢的/subject|n.|科目/succeed|vi.|成功/success|n.|成功/successful|adj.|成功的/such|adj.|这样的';
+RAW[47]='suddenly|adv.|突然/sudden|adj.|突然的/suffering|n.|痛苦/sweeper|n.|清洁工/sugar|n.|糖/sweet|adj.|甜的/suggest|vt.|建议/suggestion|n.|建议/summer|n.|夏天/sun|n.|太阳/sunny|adj.|晴朗的/Sunday|n.|星期日/supermarket|n.|超市/super|n.|超级/suppose|vt.|假设/sure|adj.|确信的/surface|n.|表面/surprise|n.|惊奇/surprised|adj.|惊讶的/surprising|adj.|令人惊讶的/survey|v.|调查/survive|v.|幸存/survival|n.|生存/survivor|n.|幸存者/symbol|n.|象征/system|n.|系统/table|n.|桌子/take|vt.|拿/talk|vi.|谈话/tall|adj.|高的/tap|n.|水龙头/tape|n.|磁带/task|n.|任务/taste|n.|味道/taxi|n.|出租车/tea|n.|茶/teacher|n.|老师/team|n.|队/teenage|n.|青少年/television|n.|电视';
+RAW[48]='temperature|n.|温度/tennis|n.|网球/term|n.|学期/terrible|adj.|可怕的/terribly|adv.|非常/test|n.|测试/text|n.|课文/than|conj.|比/thank|vt.|感谢/thankful|adj.|感激的/that|adj.|那个/theatre|n.|剧院/then|adv.|然后/there|adv.|那里/these|pron.|这些/thick|adj.|厚的/thickly|adv.|浓密地/thickness|n.|厚度/thicken|v.|变厚/thin|adj.|薄的/tired|adj.|累的/thing|n.|事物/thought|n.|想法/thinking|n.|思维/thirsty|adj.|渴的/this|adj.|这个/those|pron.|那些/through|prep.|穿过/thoroughly|adv.|彻底地/Thursday|n.|星期四/ticket|n.|票/tidy|adj.|整洁的/tidiness|n.|整洁/tie|n.|领带/tiger|n.|老虎/till|prep.|直到/time|n.|时间/title|n.|标题/today|adv.|今天/together|adv.|一起';
+RAW[49]='tomato|n.|西红柿/tomorrow|adv.|明天/tonight|adv.|今晚/too|adv.|也/tool|n.|工具/toothache|n.|牙痛/top|n.|顶部/topic|n.|话题/touch|v.|触摸/touching|adj.|感人的/touched|adj.|受感动的/tour|n.|旅行/tourist|n.|游客/toward|prep.|朝向/tower|n.|塔/town|n.|城镇/toy|n.|玩具/traditional|adj.|传统的/tradition|n.|传统/traditionally|adv.|传统上/traffic|n.|交通/train|n.|火车/translate|vt.|翻译/translation|n.|翻译/translator|n.|译者/transport|n.|运输/transportation|n.|运输/tree|n.|树/trick|n.|诡计/tricky|adj.|狡猾的/trip|n.|旅行/trouble|n.|麻烦/troublesome|adj.|麻烦的/trousers|n.|裤子/true|adj.|真实的/truly|adv.|真实地/truth|n.|真理/try|v.|尝试/Tuesday|n.|星期二/turkey|n.|火鸡';
+RAW[50]='turn|v.|转动/twice|adv.|两次/twin|n.|双胞胎/type|n.|类型/typist|n.|打字员/ugly|adj.|丑陋的/umbrella|n.|雨伞/uncle|n.|叔叔/under|prep.|在……下面/underground|adj.|地下的/underline|vt.|下划线/underlined|adj.|带下划线的/unforgettable|adj.|难忘的/unfortunately|adv.|不幸地/unhappy|adj.|不快乐的/unhealthy|adj.|不健康的/uniform|n.|制服/unit|n.|单元/united|adj.|联合的/university|n.|大学/unless|conj.|除非/until|prep.|直到/unusual|adj.|不寻常的/up|adv.|向上/upset|adj.|难过的/upstairs|adv.|楼上/use|vt.|使用/useful|adj.|有用的/useless|adj.|无用的/usual|adj.|通常的/usually|adv.|通常/van|n.|货车/various|adj.|各种各样的/variety|n.|种类/vegetable|n.|蔬菜/very|adv.|非常/victory|n.|胜利/video|n.|视频/view|n.|视图/village|n.|村庄';
+RAW[51]='violin|n.|小提琴/visit|v.|参观/visitor|n.|访客/voice|n.|声音/volleyball|n.|排球/wait|vi.|等待/waiter|n.|服务员/waitress|n.|女服务员/walk|v.|走/wall|n.|墙/want|vt.|想要/war|n.|战争/warm|adj.|温暖的/warmth|n.|温暖/warmly|adv.|温暖地/warn|vt.|警告/wash|vt.|洗/waste|vt.|浪费/wasteful|adj.|浪费的/watch|vt.|观看/water|n.|水/wave|v.|挥手/way|n.|道路/weak|adj.|虚弱的/weakly|adv.|虚弱地/weakness|n.|弱点/weaken|v.|削弱/weather|n.|天气/Wednesday|n.|星期三/week|n.|周/weekday|n.|工作日/weekend|n.|周末/weigh|v.|称重/weight|n.|重量/welcome|n.|欢迎/west|n.|西方/western|adj.|西方的/wet|adj.|湿的/what|pron.|什么/when|adv.|什么时候';
+RAW[52]='where|adv.|在哪里/whether|conj.|是否/which|adj.|哪一个/while|conj.|当……时/white|n.|白色/whole|adj.|整个的/whom|pron.|谁(宾格)/whose|pron.|谁的/why|adv.|为什么/wide|adj.|宽的/widen|v.|加宽/width|n.|宽度/wife|n.|妻子/wild|adj.|野生的/will|v.aux.|将会/winner|n.|获胜者/wind|n.|风/windy|adj.|有风的/window|n.|窗户/wine|n.|葡萄酒/wing|n.|翅膀/winter|n.|冬天/wisdom|n.|智慧/wise|adj.|明智的/wish|v.|希望/with|prep.|和/within|prep.|在……内/without|prep.|没有/wolf|n.|狼/wonder|v.|想知道/wonderful|adj.|精彩的/wood|n.|木头/woods|n.|树林/wooden|adj.|木制的/word|n.|单词/work|v.|工作/worker|n.|工人/world|n.|世界/worry|v.|担心/would|v.aux.|愿意';
+RAW[53]='wound|n.|伤口/wounded|adj.|受伤的/writer|n.|作家/wrong|adj.|错误的/year|n.|年/yearly|adj.|每年的/yellow|n.|黄色/yes|adv.|是/yesterday|adv.|昨天/yet|adv.|还/young|adj.|年轻的/zero|num.|零/zoo|n.|动物园';
+// Phrase groups 54-62
+RAW[54]='a bit (of)|phr.|有一点儿/a bit+v./adj.|phr.|有一点/above all|phr.|首先/a couple of|phr.|几个/a kind of|phr.|一种/a lot of|phr.|许多/a pair of|phr.|一双/a piece of|phr.|一片/according to|phr.|按照/add...to|phr.|加上/after all|phr.|毕竟/all over|phr.|到处/all day long|phr.|整天/all right|phr.|好了/all the way|phr.|一路上/and so on|phr.|等等/apologize to sb. for sth.|phr.|为某事道歉/arrive at|phr.|到达小地方/arrive in|phr.|到达大地方/as...as...|phr.|像……一样/as soon as|phr.|一……就/as soon as possible|phr.|尽快/as well|phr.|也/ask for|phr.|请求/at breakfast·lunch·supper|phr.|早午晚餐时/at first·last|phr.|起初最后/at home|phr.|在家/at least·most|phr.|至少至多/at once|phr.|立刻/at present|phr.|目前/at school|phr.|在学校/at the end of|phr.|在……底/in the end|phr.|最后/at the same time|phr.|同时/at work|phr.|在工作/at·on weekends|phr.|在周末/on weekdays|phr.|在工作日/based on|phr.|基于/be able to|phr.|能够/be afraid of|phr.|害怕';
+RAW[55]='be angry with|phr.|对某人生气/be bad for|phr.|对有害/be born|phr.|出生/be busy with|phr.|忙于/be careful with|phr.|小心/be connected to|phr.|连接到/be covered with|phr.|被覆盖/be different from|phr.|不同于/be familiar with|phr.|熟悉/be famous for|phr.|因……著名/be famous as|phr.|作为……出名/be fond of|phr.|喜爱/be full of|phr.|充满/be good at|phr.|擅长/be interested in|phr.|对感兴趣/be keen on|phr.|热爱/be late for|phr.|迟到/be made of|phr.|由……制成/be made from|phr.|由……制成(化学变化)/be made up of|phr.|由……组成/be pleased with|phr.|对满意/be proud of|phr.|对自豪/be ready for|phr.|准备好/be responsible for|phr.|对负责/be satisfied with|phr.|对满意/be strict with|phr.|对严格/be surprised at|phr.|对惊奇/be thankful to|phr.|对感激/be used to doing|phr.|习惯于做/be used to do|phr.|被用来做/used to do|phr.|过去常常做/because of|phr.|因为/belong to|phr.|属于/both...and|phr.|两者都/break down|phr.|损坏/break into|phr.|闯入/by bus|phr.|乘公交/by oneself|phr.|亲自/by phone|phr.|打电话/by the way|phr.|顺便说';
+RAW[56]='calm down|phr.|冷静下来/care for|phr.|照顾/catch a cold|phr.|感冒/catch fire|phr.|着火/change from...to|phr.|从变成/change ones mind|phr.|改变主意/check in|phr.|登记入住/come from|phr.|来自/come on|phr.|加油/come to an end|phr.|结束/come true|phr.|实现/communicate with|phr.|与交流/complain about|phr.|抱怨/consist of|phr.|由组成/cut down|phr.|砍倒/deal with|phr.|处理/depend on|phr.|依赖/die of|phr.|死于(内因)/do harm to|phr.|对有害/do ones best|phr.|尽力/do sb. a favour|phr.|帮某人忙/do some shopping|phr.|购物/dream of|phr.|梦想/dress up|phr.|打扮/each other|phr.|互相/encourage sb. to do|phr.|鼓励某人做/enjoy oneself|phr.|玩得开心/fall asleep|phr.|入睡/far away|phr.|遥远/fill in|phr.|填写/find out|phr.|发现/for example|phr.|例如/for free|phr.|免费/for the first time|phr.|第一次/for the time being|phr.|暂时/from door to door|phr.|挨家挨户/from time to time|phr.|不时/get along with|phr.|与相处/get back|phr.|返回/get into habit|phr.|养成习惯';
+RAW[57]='get off|phr.|下车/get on|phr.|上车/get ready for|phr.|为准备/get rid of|phr.|摆脱/get tired of|phr.|厌倦/get to|phr.|到达/get up|phr.|起床/give sb. a hand|phr.|帮助某人/give up|phr.|放弃/go ahead|phr.|前进/go shopping|phr.|购物/go for a swim|phr.|去游泳/go home|phr.|回家/go in for|phr.|参加/go on|phr.|继续/go on a diet|phr.|节食/go on a picnic|phr.|去野餐/go out|phr.|熄灭/go over|phr.|复习/go sightseeing|phr.|观光/go to hospital|phr.|去医院/go to bed|phr.|上床睡觉/go to college|phr.|上大学/go to school|phr.|上学/go to sleep|phr.|入睡/go to the cinema|phr.|看电影/go wrong|phr.|出错/grow up|phr.|长大/had better|phr.|最好/hand in|phr.|上交/happen to|phr.|碰巧/have to|phr.|不得不/have a class|phr.|上课/have a good time|phr.|玩得愉快/have breakfast|phr.|吃早餐/have no idea|phr.|不知道/have pity on|phr.|怜悯/have sports|phr.|运动/hear from|phr.|收到来信/hear of|phr.|听说';
+RAW[58]='help sb. with|phr.|帮助某人做/here and there|phr.|到处/hold a meeting|phr.|开会/hold on|phr.|等一等/hold ones breath|phr.|屏住呼吸/huge amounts of|phr.|大量的/in a hurry|phr.|匆忙/in a minute|phr.|一会儿/in addition|phr.|另外/in charge of|phr.|负责/in class|phr.|在课上/in danger|phr.|在危险中/in English|phr.|用英语/in fact|phr.|事实上/in favour of|phr.|赞同/in front of|phr.|在前面/in hospital|phr.|住院/in ones fifties|phr.|五十多岁/in ones opinion|phr.|在某人看来/in a weeks time|phr.|一周后/in order to|phr.|为了/in other words|phr.|换句话说/in return|phr.|作为回报/in surprise|phr.|惊讶地/in the end|phr.|最后/in the future|phr.|将来/in the middle of|phr.|在中间/in the past|phr.|过去/in this way|phr.|这样/in time|phr.|及时/in trouble|phr.|在困境中/instead of|phr.|代替/jump to conclusion|phr.|草率下结论/just now|phr.|刚才/keep a diary|phr.|记日记/keep doing|phr.|继续做/keep from|phr.|阻止/keep in touch|phr.|保持联系/keep off|phr.|阻挡/keep quiet|phr.|保持安静';
+RAW[59]='keep sb. busy|phr.|让某人忙/lose ones life|phr.|丧生/lose ones temper|phr.|发脾气/lose ones way|phr.|迷路/lose weight|phr.|减肥/laugh at|phr.|嘲笑/lay the table|phr.|摆餐具/learn from|phr.|向学习/leave school|phr.|毕业离校/leave a message|phr.|留口信/leave for|phr.|动身去/less·more than|phr.|少于多于/listen to|phr.|听/live on|phr.|靠为生/look after|phr.|照顾/look at|phr.|看/look for|phr.|寻找/look forward to|phr.|期待/look like|phr.|看起来像/look out|phr.|当心/look up|phr.|查阅/make a film|phr.|拍电影/make a fire|phr.|生火/make a living|phr.|谋生/make a mistake|phr.|犯错/make a noise|phr.|制造噪音/make friends with|phr.|交朋友/make fun of|phr.|取笑/make money|phr.|赚钱/make progress|phr.|进步/make the bed|phr.|整理床铺/make up ones mind|phr.|下决心/next to|phr.|紧挨着/no longer|phr.|不再/not...at all|phr.|一点也不/now and then|phr.|时而/of course|phr.|当然/on average|phr.|平均/on business|phr.|出差/on foot|phr.|步行';
+RAW[60]='on holiday|phr.|在度假/on ones side|phr.|在某人一边/on the other hand|phr.|另一方面/on the phone|phr.|在打电话/on the right|phr.|在右边/on the way to|phr.|在去路上/on time|phr.|准时/once a day|phr.|每天一次/once more|phr.|再次/one after another|phr.|一个接一个/one another|phr.|互相/out of|phr.|从里/out of date|phr.|过时/over and over|phr.|再三/pay attention to|phr.|注意/pay for|phr.|为付款/pick out|phr.|挑选/pick up|phr.|捡起/play a trick on|phr.|捉弄/play with|phr.|玩/plenty of|phr.|大量/point out|phr.|指出/praise sb. for|phr.|因表扬/prefer...to|phr.|更喜欢/prepare...for|phr.|为准备/prevent...from|phr.|阻止/protect...from|phr.|保护/put off|phr.|推迟/put on|phr.|穿上/put out|phr.|扑灭/put up|phr.|举起/refer to|phr.|参考/rely on|phr.|依赖/run away|phr.|逃跑/run out of|phr.|用完/save ones life|phr.|救命/search for|phr.|搜寻/see...off|phr.|送行/sell out|phr.|卖完/shake hands with|phr.|握手';
+RAW[61]='share...with|phr.|与分享/show off|phr.|炫耀/show sb. around|phr.|带某人参观/shut up|phr.|闭嘴/so far|phr.|迄今为止/so that|phr.|为了/some day|phr.|某天/stand for|phr.|代表/stay up|phr.|熬夜/stop...from|phr.|阻止/such as|phr.|例如/take a look|phr.|看一看/take a message|phr.|捎口信/take away|phr.|拿走/take care of|phr.|照顾/take charge of|phr.|负责/take hold of|phr.|抓住/take notes|phr.|记笔记/take off|phr.|脱掉起飞/take ones advice|phr.|听从建议/take out|phr.|取出/take part in|phr.|参加/take place|phr.|发生/take the place of|phr.|代替/take up|phr.|开始从事/talk about|phr.|谈论/talk to sb.|phr.|与某人交谈/tell...from|phr.|区分/tell the time|phr.|报时/the same...as|phr.|与相同/the week after next|phr.|下下周/think about|phr.|考虑/think of|phr.|想到/think over|phr.|仔细考虑/throw away|phr.|扔掉/to ones surprise|phr.|令某人惊奇/too...to|phr.|太而不能/try on|phr.|试穿/turn up·down|phr.|调高调低/turn into|phr.|变成';
+RAW[62]='turn off|phr.|关掉/turn on|phr.|打开/turn out|phr.|结果是/turn over|phr.|翻转/used to|phr.|过去常常/wait for|phr.|等待/wake up|phr.|醒来/whats more|phr.|而且/with great care|phr.|非常小心/with pleasure|phr.|愉快地/with the help of|phr.|在帮助下/work as|phr.|从事/work out|phr.|解决/worry about|phr.|担心/would like to|phr.|想要/would rather|phr.|宁愿';
+
+// ===== 固定搭配数据 (key: lowercase word) =====
+var COL={
+"able":"be able to do sth 能够做某事",
+"ability":"the ability to do sth 做某事的能力 / have the ability to 有能力",
+"about":"be about to do 即将做 / talk about 谈论 / worry about 担心",
+"above":"above all 首先 / above zero 零度以上",
+"abroad":"go abroad 出国 / study abroad 留学",
+"accept":"accept an invitation 接受邀请 / accept sb's apology 接受道歉",
+"accident":"by accident 偶然地 / a traffic accident 一起交通事故",
+"achieve":"achieve one's goal 实现目标 / achieve success 取得成功",
+"across":"walk across 走过 / come across 偶然遇到",
+"act":"act as 充当 / act on 按……行动",
+"activity":"take part in an activity 参加活动 / outdoor activity 户外活动",
+"add":"add A to B 把A加到B上 / add up to 总计为",
+"address":"give a speech / make an address 发表演讲 / home address 家庭住址",
+"advantage":"take advantage of 利用 / have an advantage over 比……有优势",
+"advice":"a piece of advice 一条建议 / take/follow one's advice 听从建议 / ask for advice 征求建议",
+"advise":"advise sb to do sth 建议某人做某事 / advise doing sth 建议做某事",
+"afford":"afford to do sth 负担得起做某事 / can't afford 买不起",
+"afraid":"be afraid of 害怕 / be afraid to do 不敢做 / I'm afraid 恐怕",
+"after":"after all 毕竟 / look after 照顾 / one after another 一个接一个",
+"again":"again and again 一再 / now and again 偶尔 / once again 再一次",
+"against":"be against 反对 / lean against 倚靠 / fight against 与……斗争",
+"age":"at the age of 在……岁时 / for ages 很久",
+"ago":"long ago 很久以前 / a moment ago 刚才",
+"agree":"agree with sb 同意某人 / agree to do 同意做 / agree on 就……达成一致",
+"aim":"aim at 瞄准；旨在 / with the aim of 目的是",
+"alive":"stay alive 活着 / keep ... alive 使……活着",
+"allow":"allow sb to do sth 允许某人做某事 / allow doing 允许做",
+"alone":"leave sb alone 别打扰某人 / let alone 更不用说",
+"along":"get along with 与……相处 / along with 连同",
+"amazed":"be amazed at/by 对……感到惊讶",
+"amazing":"an amazing view 惊人的景色",
+"amount":"a large amount of 大量的 / amount to 总计达到",
+"amuse":"amuse oneself 自娱自乐",
+"angry":"be angry with sb 生某人的气 / be angry about sth 因某事生气",
+"animal":"wild animal 野生动物 / protect animals 保护动物",
+"answer":"answer the question 回答问题 / in answer to 回答……",
+"apologize":"apologize to sb for sth 为某事向某人道歉",
+"appear":"appear to do 似乎做 / it appears that 看来",
+"apply":"apply for 申请 / apply to 适用于 / apply ... to 把……应用于",
+"area":"in the area 在该地区 / a large area 大片区域",
+"argue":"argue with sb 与某人争论 / argue about sth 争论某事",
+"arrive":"arrive at 到达(小地方) / arrive in 到达(大地方) / arrive on time 准时到达",
+"art":"work of art 艺术品 / fine arts 美术",
+"ask":"ask for 请求 / ask sb to do 要求某人做 / ask sb a question 问问题",
+"asleep":"fall asleep 入睡 / be fast asleep 熟睡",
+"attend":"attend a meeting 参加会议 / attend to 处理；照料",
+"attention":"pay attention to 注意 / attract attention 吸引注意",
+"attract":"be attracted to 被……吸引 / attract attention 吸引注意",
+"available":"be available to sb 对某人可用 / tickets are available 有票可买",
+"average":"on average 平均 / above/below average 高于/低于平均",
+"avoid":"avoid doing sth 避免做某事",
+"award":"award sb sth 授予某人某物 / win an award 获奖",
+"base":"be based on 基于 / a military base 军事基地",
+"be":"be born 出生 / be used to 习惯于",
+"bear":"can't bear 无法忍受 / bear in mind 记住",
+"beg":"beg sb to do 恳求某人做 / beg for 乞求",
+"begin":"begin with 以……开始 / begin to do 开始做",
+"believe":"believe in 信任 / believe it or not 信不信由你",
+"belong":"belong to 属于",
+"better":"had better do 最好做 / get better 好转",
+"blame":"blame sb for sth 因某事责备某人",
+"borrow":"borrow sth from sb 向某人借某物",
+"bother":"bother to do 费心做 / don't bother 别麻烦了",
+"break":"break down 出故障 / break into 闯入 / break out 爆发 / break up 分手",
+"breath":"hold one's breath 屏住呼吸 / out of breath 上气不接下气",
+"bring":"bring up 抚养 / bring about 引起 / bring back 带回",
+"busy":"be busy with sth 忙于某事 / be busy doing 忙着做",
+"call":"call on 拜访 / call up 打电话 / call off 取消",
+"calm":"calm down 冷静下来 / keep calm 保持冷静",
+"care":"care about 关心 / care for 照顾 / take care of 照料",
+"careful":"be careful with 当心 / be careful to do 小心做",
+"carry":"carry on 继续 / carry out 执行 / carry away 带走",
+"catch":"catch up with 赶上 / catch a cold 感冒 / catch fire 着火",
+"cause":"cause sb to do 导致某人做 / the cause of ……的原因",
+"change":"change one's mind 改变主意 / change ... into 把……变成",
+"charge":"in charge of 负责 / free of charge 免费",
+"cheer":"cheer up 振作起来 / cheer for 为……欢呼",
+"choose":"choose to do 选择做 / choose between 在……之间选择",
+"close":"close to 靠近 / close down 关闭",
+"come":"come from 来自 / come true 实现 / come up with 想出 / come on 加油",
+"communicate":"communicate with 与……交流",
+"compare":"compare A with B 把A与B比较 / compared to 与……相比",
+"complain":"complain about/of 抱怨",
+"connect":"connect ... to/with 把……连接到 / be connected with 与……有关",
+"consist":"consist of 由……组成",
+"continue":"continue to do / doing 继续做",
+"control":"under control 受控制 / out of control 失控",
+"cost":"cost sb sth 花费某人某物 / at the cost of 以……为代价",
+"count":"count on 依靠 / count down 倒数",
+"cover":"be covered with 被……覆盖 / cover up 掩盖",
+"crowd":"a crowd of 一群 / crowd into 挤进",
+"cry":"cry out 大叫 / burst into tears 突然哭起来",
+"cut":"cut down 砍倒；削减 / cut off 切断 / cut up 切碎",
+"damage":"do damage to 对……造成损害",
+"deal":"deal with 处理 / a great deal of 大量",
+"decide":"decide to do 决定做 / decide on 决定",
+"depend":"depend on 依赖；取决于 / it depends 视情况而定",
+"describe":"describe ... as 把……描述为",
+"die":"die of/from 死于 / die out 灭绝",
+"different":"be different from 与……不同",
+"divide":"divide ... into 把……分成",
+"do":"do one's best 尽力 / do harm to 对……有害 / have something to do with 与……有关",
+"dream":"dream of/about 梦想 / a dream comes true 梦想成真",
+"dress":"dress up 打扮 / be dressed in 穿着",
+"drop":"drop by 顺便拜访 / drop off 下车；睡着",
+"eager":"be eager to do 渴望做 / be eager for 渴望",
+"enjoy":"enjoy oneself 玩得开心 / enjoy doing 喜欢做",
+"enough":"enough to do 足以 / not ... enough 不够",
+"enter":"enter for 报名参加 / enter into 进入",
+"escape":"escape from 从……逃脱",
+"expect":"expect to do 期望做 / expect sb to do 期待某人做",
+"experience":"have experience in 在……有经验",
+"explain":"explain sth to sb 向某人解释某事",
+"fail":"fail to do 未能做 / fail in 在……失败 / without fail 一定",
+"fall":"fall asleep 入睡 / fall in love 爱上 / fall down 摔倒",
+"familiar":"be familiar with 熟悉 / be familiar to sb 为某人所熟悉",
+"famous":"be famous for 因……著名 / be famous as 作为……出名",
+"fear":"in fear 害怕地 / for fear of 唯恐",
+"feed":"feed on 以……为食 / feed sb with 用……喂",
+"feel":"feel like doing 想要做 / feel free to 随意",
+"fill":"fill in 填写 / fill ... with 用……装满 / be filled with 充满",
+"find":"find out 查明 / find it hard to 发现很难",
+"fit":"be fit for 适合 / keep fit 保持健康",
+"focus":"focus on 集中于",
+"fond":"be fond of 喜爱",
+"force":"force sb to do 强迫某人做",
+"forget":"forget to do 忘记要做 / forget doing 忘记做过",
+"forward":"look forward to 期待",
+"full":"be full of 充满 / in full 全部地",
+"gain":"gain weight 增重 / gain experience 获得经验",
+"get":"get up 起床 / get on with 与……相处 / get rid of 摆脱 / get used to 习惯于",
+"give":"give up 放弃 / give in 屈服 / give out 分发 / give away 赠送",
+"go":"go on 继续 / go over 复习 / go through 经历 / go ahead 进行",
+"good":"be good at 擅长 / be good for 对……有益 / be good to 对……友好",
+"graduate":"graduate from 从……毕业",
+"grow":"grow up 长大 / grow into 成长为",
+"hand":"hand in 上交 / hand out 分发 / give sb a hand 帮忙 / by hand 用手",
+"happen":"happen to do 碰巧做 / happen to sb 发生在某人身上",
+"hang":"hang up 挂断 / hang out 闲逛 / hang on 稍等",
+"hard":"work hard 努力工作 / try hard 努力",
+"harm":"do harm to 对……有害 / no harm 没坏处",
+"hate":"hate to do / doing 讨厌做",
+"have":"have to 不得不 / have a good time 玩得开心 / have something to do with 与……有关",
+"hear":"hear from 收到来信 / hear of/about 听说",
+"help":"help sb with sth 帮助某人做某事 / help sb (to) do 帮某人做 / can't help doing 忍不住做",
+"hold":"hold on 坚持；稍等 / hold up 举起 / hold a meeting 开会",
+"hope":"hope to do 希望做 / hope for 希望得到",
+"hurry":"hurry up 赶快 / in a hurry 匆忙",
+"hurt":"hurt oneself 受伤 / get hurt 受伤",
+"imagine":"imagine doing 想象做 / can't imagine 无法想象",
+"improve":"improve on 改进 / room to improve 改进空间",
+"include":"including 包括 / be included in 被包括在",
+"insist":"insist on 坚持",
+"interest":"be interested in 对……感兴趣 / lose interest 失去兴趣",
+"introduce":"introduce ... to 把……介绍给",
+"invite":"invite sb to do 邀请某人做 / invite sb to 邀请某人到",
+"join":"join in 参加(活动) / join sb 加入某人 / join ... to 把……连接",
+"keep":"keep doing 持续做 / keep ... from 阻止 / keep in touch 保持联系 / keep up with 跟上",
+"knock":"knock at/on 敲 / knock down 撞倒",
+"know":"know about 了解 / as far as I know 据我所知",
+"laugh":"laugh at 嘲笑 / laugh out loud 大笑",
+"lead":"lead to 导致 / lead sb to do 使某人做",
+"learn":"learn from 向……学习 / learn ... by heart 背熟",
+"leave":"leave for 动身去 / leave behind 留下 / leave a message 留言",
+"lend":"lend sth to sb 把某物借给某人",
+"let":"let alone 更不用说 / let sb down 使某人失望",
+"like":"feel like 想要 / would like to 想要 / look like 看起来像",
+"listen":"listen to 听 / listen for 留心听",
+"live":"live on 靠……为生 / live up to 不辜负",
+"look":"look after 照顾 / look for 寻找 / look forward to 期待 / look up 查阅 / look out 当心",
+"lose":"lose weight 减肥 / lose one's way 迷路 / lose heart 灰心",
+"make":"make up 编造；化妆 / make friends 交朋友 / make a decision 做决定 / make sure 确保 / be made of 由……制成",
+"manage":"manage to do 设法做到",
+"matter":"no matter 无论 / as a matter of fact 事实上 / what's the matter 怎么了",
+"mean":"mean to do 打算做 / mean doing 意味着做",
+"meet":"meet with 遇到 / nice to meet you 很高兴见到你",
+"mention":"mention sth to sb 向某人提到 / not to mention 更不用说",
+"mind":"make up one's mind 下决心 / change one's mind 改变主意 / never mind 没关系",
+"miss":"miss doing 错过做 / be missing 失踪",
+"mistake":"make a mistake 犯错 / by mistake 错误地",
+"need":"need to do 需要做 / in need 在困难中 / need doing 需要被做",
+"notice":"take notice of 注意 / without notice 不预先通知",
+"offer":"offer to do 主动提出做 / offer sb sth 给某人提供某物",
+"operate":"operate on sb 给某人做手术",
+"pay":"pay attention to 注意 / pay for 付款 / pay back 偿还 / pay off 还清",
+"pick":"pick up 捡起；接(人) / pick out 挑出",
+"plan":"plan to do 计划做 / make a plan 制定计划",
+"play":"play a role 扮演角色 / play with 玩 / play a trick on 捉弄",
+"point":"point out 指出 / point to/at 指向 / on the point of 即将",
+"prefer":"prefer A to B 比起B更喜欢A / prefer to do 更愿意做 / would prefer 宁愿",
+"prepare":"prepare for 为……做准备 / prepare to do 准备做",
+"prevent":"prevent ... from 阻止……做",
+"protect":"protect ... from 保护……免受",
+"provide":"provide sb with sth 向某人提供某物 / provide sth for sb 为某人提供",
+"pull":"pull down 拆毁 / pull up 停车 / pull out 拔出",
+"put":"put on 穿上 / put off 推迟 / put up 张贴 / put out 扑灭 / put away 收起",
+"reach":"reach for 伸手去拿 / reach out 伸出 / out of reach 够不着",
+"realize":"realize that 意识到 / realize one's dream 实现梦想",
+"refer":"refer to 提到；参考",
+"refuse":"refuse to do 拒绝做 / refuse sth 拒绝某物",
+"rely":"rely on 依赖",
+"remember":"remember to do 记得要做 / remember doing 记得做过",
+"remind":"remind sb of sth 使某人想起 / remind sb to do 提醒某人做",
+"require":"require sb to do 要求某人做 / be required to 被要求",
+"result":"result in 导致 / result from 由……引起 / as a result 结果",
+"return":"in return 作为回报 / return to 返回",
+"rid":"get rid of 摆脱",
+"rise":"rise up 升起 / give rise to 引起",
+"run":"run out of 用完 / run away 逃跑 / run into 撞上；偶遇 / in the long run 从长远看",
+"save":"save up 储蓄 / save sb from 把某人从……救出 / save time 节省时间",
+"search":"search for 搜寻 / in search of 寻找",
+"see":"see off 送行 / see to 处理 / I see 我明白了",
+"sell":"sell out 售完 / sell well 畅销",
+"send":"send for 派人去请 / send out 发出 / send up 发射",
+"set":"set up 建立 / set off 出发 / set out 着手 / set free 释放",
+"share":"share ... with 与……分享 / share in 分担",
+"show":"show off 炫耀 / show up 出现 / show sb around 带某人参观",
+"shut":"shut up 闭嘴 / shut down 关闭",
+"smile":"smile at 对……微笑 / with a smile 微笑着",
+"solve":"solve a problem 解决问题",
+"speak":"speak to/with 与……交谈 / speak of 谈到 / so to speak 可以说",
+"spend":"spend ... on sth 在某事上花费 / spend ... doing 花时间做",
+"stand":"stand for 代表 / can't stand 无法忍受 / stand up 起立",
+"stop":"stop to do 停下来去做 / stop doing 停止做 / stop ... from 阻止",
+"succeed":"succeed in doing 成功做到",
+"suffer":"suffer from 遭受",
+"suggest":"suggest doing 建议做 / suggest that 建议",
+"suit":"be suited to 适合 / suit sb 适合某人",
+"supply":"supply sb with sth 向某人供应",
+"suppose":"be supposed to 应该 / I suppose so 我想是的",
+"sure":"be sure of/about 确信 / be sure to do 一定会 / make sure 确保",
+"surprise":"to one's surprise 令人惊讶的是 / in surprise 惊讶地 / be surprised at 对……惊讶",
+"take":"take part in 参加 / take care of 照顾 / take off 起飞；脱掉 / take place 发生 / take after 长得像",
+"talk":"talk about 谈论 / talk to/with 与……交谈 / talk over 商讨",
+"teach":"teach sb sth 教某人某事 / teach sb to do 教某人做",
+"tell":"tell ... from 区分 / tell the truth 说实话 / tell sb to do 叫某人做",
+"thank":"thank sb for sth 因某事感谢某人 / thanks to 多亏",
+"think":"think about/of 考虑 / think over 仔细考虑 / think highly of 高度评价",
+"throw":"throw away 扔掉 / throw at 朝……扔",
+"touch":"keep in touch 保持联系 / get in touch 取得联系 / lose touch 失去联系",
+"translate":"translate ... into 把……翻译成",
+"try":"try to do 努力做 / try doing 试着做 / try on 试穿 / try one's best 尽力",
+"turn":"turn on 打开 / turn off 关掉 / turn up 调大；出现 / turn down 调小；拒绝 / turn out 结果是 / turn to 求助于 / in turn 依次",
+"use":"used to do 过去常常 / be used to doing 习惯于 / make use of 利用 / be used to do 被用来做",
+"wait":"wait for 等待 / wait on 服侍 / can't wait to 迫不及待",
+"wake":"wake up 醒来 / wake sb up 叫醒某人",
+"warn":"warn sb of sth 警告某人某事 / warn sb to do 警告某人做",
+"waste":"waste time 浪费时间 / a waste of 浪费",
+"watch":"watch out 当心 / keep watch 看守",
+"wear":"wear out 穿破；耗尽 / wear off 逐渐消失",
+"wish":"wish to do 希望做 / wish sb sth 祝某人某事 / make a wish 许愿",
+"wonder":"wonder if/whether 想知道是否 / no wonder 难怪",
+"work":"work out 算出；锻炼 / work on 致力于 / work as 担任 / out of work 失业",
+"worry":"worry about 担心 / be worried about 担心",
+"write":"write down 写下 / write to sb 给某人写信"
+};
+
+// Convert RAW to GROUPS format
+const GROUPS = [];
+for(let i=1;i<=62;i++){
+  if(!RAW[i])continue;
+  const words=RAW[i].split('/').map(item=>{
+    const parts=item.split('|');
+    if(parts.length<3)return null;
+    const en=parts[0].trim(),pos=parts[1].trim(),cn=parts[2].trim();
+    if(!en||!cn)return null;
+    const w={en,pos,cn};
+    // Generate phonetic placeholder
+    w.phonetic='';
+    return w;
+  }).filter(Boolean);
+  GROUPS.push({name:'第'+i+'组',words});
+}
+console.log('Loaded',GROUPS.length,'groups with',GROUPS.reduce((s,g)=>s+g.words.length,0),'words');
+
+// ===== 主题分类：把同一批单词按语义主题归类（组内字母序→同根词相邻）=====
+var THEME_META=[
+ ['family','👪 人物·家庭'],['body','🧍 身体部位'],['health','💊 健康·医疗'],
+ ['food','🍎 食物·饮食'],['timew','⏰ 时间·日期'],['weather','🌦 天气·自然'],
+ ['animal','🐾 动物·植物'],['place','🏙 地点·建筑'],['transport','🚌 交通·旅行'],
+ ['clothes','👕 衣着·颜色'],['money','🛒 购物·金钱'],['school','🏫 学校·学习'],
+ ['sport','⚽ 运动·娱乐'],['feel','😊 情绪·性格'],['describe','📏 描述·性状'],
+ ['action','🏃 动作·行为'],['comm','💬 思维·交流'],['number','🔢 数量·程度'],
+ ['tech','💻 科技·社会·文化'],['func','🔗 虚词·连接'],['abstract','🧠 抽象·概念'],
+ ['phrase','🧷 固定搭配']
+];
+var THEME_SETS={
+ family:" father mother baby parent son daughter brother sister uncle aunt cousin wife husband family child childhood friend friendship neighbour neighbourhood guest host hostess stranger gentleman lady madam sir person people human couple twin teenager pupil king queen god classmate partner member adult ",
+ body:" head hair face eye ear mouth tooth arm hand finger leg foot heart brain bone skin chest stomach throat body blood breath shoulder knee neck thumb wing fur tail voice ",
+ health:" ill illness sick sickness sicken fever feverish cough headache toothache pain painful painless medicine medical doctor nurse dentist hospital clinic patient impatient patience health healthy unhealthy heal wound wounded hurt fit asleep sleepy tired alive die death dead ",
+ food:" food eat drink meal breakfast lunch dinner supper rice bread cake biscuit sandwich hamburger noodle dumpling soup salad sugar salt sauce butter cheese egg meat pork chicken fish fruit apple banana orange pear peach pineapple tomato potato carrot cabbage vegetable milk tea coffee juice water wine beer chocolate honey jam snack pizza icecream steak boil fry roast taste delicious sweet hungry thirsty cook menu restaurant bowl plate spoon fork cup bottle glass kitchen ",
+ timew:" Monday Tuesday Wednesday Thursday Friday Saturday Sunday January February March April May June July August September October November December spring summer autumn winter season today tomorrow yesterday tonight morning afternoon evening night day week weekday weekend month year hour minute second time date age moment future past century daily early late soon now then always often usually sometimes never seldom ago already yet recently nowadays ",
+ weather:" weather rain rainy snow snowy wind windy cloud cloudy sunny sun moon star sky storm fog ice cold hot warm cool wet dry climate temperature nature natural earth sea ocean river lake mountain hill forest island desert beach coast coastline sand stone rock wave air fire flood ",
+ animal:" animal dog cat bird fish bear lion tiger elephant monkey horse cow sheep duck pig wolf mouse panda fox rabbit snake butterfly bee insect zoo pet flower tree grass leaf root plant seed wood woods garden ",
+ place:" school hospital park shop store supermarket mall bank station airport library museum cinema theatre church palace tower square market office factory farm village town city capital country nation continent house home flat room bedroom bathroom hall building bridge street road hotel prison ",
+ transport:" bus car taxi train plane bike bicycle motorcycle ship boat ferry truck van underground subway traffic transport transportation ticket passenger driver pilot journey trip tour travel flight railway ",
+ clothes:" clothes shirt coat jacket dress skirt trousers jeans shoe sock hat cap glove scarf belt uniform pocket button tie sweater pair colour colourful colourless red blue green yellow black white brown pink grey gold golden silver ",
+ money:" money dollar pound cent penny price cost buy sell bill expensive cheap free coin wage salary pay spend afford rich poor business market sale customer ",
+ school:" study learn lesson class course subject homework exam test mark grade college university student teacher pupil pen pencil book ruler blackboard classroom desk dictionary notebook page knowledge education educate science maths physics chemistry biology geography history term graduate ",
+ sport:" sport football basketball volleyball tennis ball game swim race jump skate match team player champion gym exercise hobby music song dance film movie cartoon piano violin guitar concert party picnic holiday camp photo radio television "
+};
+function classifyWord(w){
+  var en=(w.en||'').toLowerCase(), pos=w.pos||'', cn=w.cn||'';
+  if(pos==='phr.')return 'phrase';
+  for(var i=0;i<THEME_META.length;i++){var k=THEME_META[i][0];var set=THEME_SETS[k];if(set&&set.indexOf(' '+en+' ')>=0)return k;}
+  if(/高兴|快乐|生气|愤怒|害怕|恐惧|紧张|悲伤|难过|伤心|惊|担心|兴奋|无聊|厌|尴尬|骄傲|自豪|勇敢|害羞|诚实|友好|友善|懒|聪明|愚蠢|耐心|慷慨|脾气|开心|情绪|性格|满意|失望|感激|抱歉|羞|温柔|严肃|疯狂|冷静|自信|渴望/.test(cn))return 'feel';
+  if(/想|认为|相信|知道|理解|懂|说|讲|谈|告诉|问|回答|解释|讨论|建议|拒绝|表达|交流|沟通|语言|意思|含义|决定|记得|记住|忘|猜|提醒|描述|介绍|宣布|承诺|抱怨|警告|翻译|同意/.test(cn))return 'comm';
+  if(/电脑|网络|互联网|手机|电话|科技|技术|机器|科学|政府|社会|文化|历史|经济|法律|战争|和平|环境|世界|国际|公司|组织|系统|信息|新闻|报纸|杂志|节目|广告|发明|实验|能源|工业|政治/.test(cn))return 'tech';
+  if(/^num/.test(pos)||/数|许多|几个|半|双|倍|百分|程度|几乎|相当|总共|大约|更多|更少|全部|每|第|零|一对|多少|足够|额外|数量/.test(cn))return 'number';
+  if(/^(prep|conj|pron|art|aux|det|interj)/.test(pos)||pos==='v.aux.')return 'func';
+  if(/^adj/.test(pos)||/^adv/.test(pos))return 'describe';
+  if(/^v/.test(pos))return 'action';
+  return 'abstract';
+}
+var THEME_GROUPS=(function(){
+  var bucket={};
+  GROUPS.forEach(function(g){g.words.forEach(function(w){var k=classifyWord(w);(bucket[k]||(bucket[k]=[])).push(w);});});
+  var out=[];
+  THEME_META.forEach(function(m){
+    var arr=bucket[m[0]];if(!arr||!arr.length)return;
+    if(m[0]!=='phrase')arr.sort(function(a,b){return a.en.toLowerCase()<b.en.toLowerCase()?-1:1;});
+    out.push({name:m[1]+' ('+arr.length+')',words:arr});
+  });
+  return out;
+})();
+console.log('Theme groups:',THEME_GROUPS.length,'total',THEME_GROUPS.reduce(function(s,g){return s+g.words.length;},0));
+
+// 英文→词条 索引（用于今日总结按单词查词性词义）
+var ENMAP={};
+GROUPS.forEach(function(g){g.words.forEach(function(w){if(!ENMAP[w.en])ENMAP[w.en]=w;});});
+// 每日鼓励语（按日期轮换，每天不同）
+var QUOTES=['坚持就是胜利，今天的你又赢了一次！','自律给你自由，继续加油！','你坚持学习的样子真酷！','积少成多，每个单词都算数。','今天的努力，是明天的底气。','优秀是一种习惯，你正在养成它。','慢慢来，比较快，你做得很棒！','日拱一卒，功不唐捐。','每天进步一点点，未来惊艳所有人。','学习的苦是暂时的，学不到的苦是一辈子的。','你今天没有偷懒，为你点赞！','水滴石穿，靠的就是这股坚持劲。','把简单的事做到极致，就是不简单。','坚持背单词的人，运气都不会太差。','今天也是元气满满的学习日！','别怕路远，你已经在路上了。','自信源于实力，实力源于积累。','今天多记的词，是给未来的礼物。','你比昨天的自己更强了一点点。','热爱可抵岁月漫长，加油！'];
+function todayQuote(){var d=Math.floor(new Date(today()).getTime()/864e5);return QUOTES[((d%QUOTES.length)+QUOTES.length)%QUOTES.length]}
+function fmtDur(s){s=Math.max(0,Math.round(s));if(s<60)return s+'秒';var m=Math.floor(s/60),ss=s%60;if(m<60)return m+'分'+(ss?ss+'秒':'');var h=Math.floor(m/60);return h+'小时'+(m%60)+'分'}
+
+
+
+// ========== UTILITIES ==========
+const $=s=>document.querySelector(s);
+const $$=s=>document.querySelectorAll(s);
+const LS={get(k,d){try{const v=localStorage.getItem('vocab_'+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem('vocab_'+k,JSON.stringify(v))}catch(e){}}};
+const today=()=>new Date().toISOString().slice(0,10);
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+var _voices=[],_ttsPrimed=false;
+function loadVoices(){if('speechSynthesis'in window)_voices=speechSynthesis.getVoices()||[]}
+if('speechSynthesis'in window){
+  loadVoices();
+  speechSynthesis.onvoiceschanged=loadVoices;
+  // 浏览器有时不触发 onvoiceschanged，轮询补一刀
+  var _vt=setInterval(function(){loadVoices();if(_voices.length)clearInterval(_vt)},300);
+  setTimeout(function(){clearInterval(_vt)},5000);
+  // 首次任意点击时“解锁”语音引擎（Chrome 首点不出声的根因）
+  var primeTTS=function(){
+    if(_ttsPrimed)return;_ttsPrimed=true;
+    try{var s=new SpeechSynthesisUtterance(' ');s.volume=0;speechSynthesis.speak(s);}catch(e){}
+    loadVoices();
+    document.removeEventListener('pointerdown',primeTTS,true);
+  };
+  document.addEventListener('pointerdown',primeTTS,true);
+}
+function pickVoice(){
+  if(!_voices.length)loadVoices();
+  return _voices.find(function(v){return /en[-_]US/i.test(v.lang)})||_voices.find(function(v){return /^en/i.test(v.lang)})||null;
+}
+// 音标：按需从免费词典 API 获取并缓存到本地
+var _ipaCache=null;
+function ipaStore(){if(!_ipaCache)_ipaCache=LS.get('ipa',{});return _ipaCache}
+function ensureIPA(word,cb){
+  var key=(word||'').toLowerCase(),c=ipaStore();
+  if(c[key]!==undefined){cb(c[key]);return}
+  if(!/^[a-zA-Z][a-zA-Z'-]*$/.test(key)){cb('');return}
+  fetch('https://api.dictionaryapi.dev/api/v2/entries/en/'+encodeURIComponent(key))
+    .then(function(r){return r.ok?r.json():null})
+    .then(function(j){
+      var ipa='';
+      if(j&&j[0]){
+        if(j[0].phonetic)ipa=j[0].phonetic;
+        else if(j[0].phonetics){for(var i=0;i<j[0].phonetics.length;i++){if(j[0].phonetics[i].text){ipa=j[0].phonetics[i].text;break}}}
+      }
+      c[key]=ipa;LS.set('ipa',c);cb(ipa);
+    }).catch(function(){cb('')});
+}
+var _audio=null;
+function speak(t){
+  if(!t)return;
+  var word=String(t).trim();
+  // 单个英文单词优先用在线发音（更稳定，不依赖系统语音包）；失败再回退本地合成
+  if(/^[a-zA-Z][a-zA-Z'-]*$/.test(word)){
+    try{
+      if(!_audio)_audio=new Audio();
+      _audio.onerror=function(){synthSpeak(word)};
+      _audio.src='https://dict.youdao.com/dictvoice?audio='+encodeURIComponent(word)+'&type=2';
+      var pr=_audio.play();
+      if(pr&&pr.catch)pr.catch(function(){synthSpeak(word)});
+      return;
+    }catch(e){}
+  }
+  synthSpeak(word);
+}
+function synthSpeak(t){
+  if(!('speechSynthesis'in window)){alert('当前浏览器不支持语音朗读，请用 Chrome / Edge / Safari 打开');return}
+  if(!t)return;
+  var tries=0;
+  var doSpeak=function(){
+    // 语音列表还没就绪时，最多等待几轮再发音
+    if(!_voices.length&&tries<10){tries++;loadVoices();setTimeout(doSpeak,200);return}
+    var u=new SpeechSynthesisUtterance(String(t));
+    u.lang='en-US';u.rate=0.85;
+    var v=pickVoice();if(v)u.voice=v; // 没有英文语音时也照样朗读（用默认语音）
+    u.onerror=function(e){console.warn('TTS error:',e.error)};
+    try{speechSynthesis.resume();}catch(e){}
+    speechSynthesis.speak(u);
+    // Chrome/Edge 偶尔会停在 paused 状态，需要手动 resume 才出声
+    setTimeout(function(){try{if(speechSynthesis.paused)speechSynthesis.resume();}catch(e){}},150);
+  };
+  // 已知 Chrome bug：cancel() 后立刻 speak() 会被忽略，延迟一拍更可靠
+  try{speechSynthesis.cancel();}catch(e){}
+  setTimeout(doSpeak,60);
+}
+// 中文朗读（读词性+词义），用系统中文语音
+function speakZh(t){
+  if(!('speechSynthesis'in window)||!t)return;
+  try{
+    var u=new SpeechSynthesisUtterance(String(t));u.lang='zh-CN';u.rate=0.95;
+    var v=_voices.find(function(x){return /^zh/i.test(x.lang)});if(v)u.voice=v;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+var POS_CN={'n.':'名词','v.':'动词','vt.':'动词','vi.':'动词','adj.':'形容词','adv.':'副词','prep.':'介词','conj.':'连词','pron.':'代词','num.':'数词','art.':'冠词','det.':'限定词','phr.':'短语','v.aux.':'助动词','int.':'感叹词'};
+function posCn(p){return POS_CN[p]||p}
+// 进入学习卡片：先读英文单词，稍后读中文词性+词义
+function playCard(w){
+  speak(w.en);
+  setTimeout(function(){speakZh(posCn(w.pos)+'，'+w.cn)},1200);
+}
+function showModal(title,html,btn,cb){const m=$('#modal');$('#modal-content').innerHTML='<div class="modal-close" onclick="closeModal()">×</div><h3>'+title+'</h3>'+html+'<br><button class="btn btn-primary btn-full" onclick="closeModal()">'+(btn||'知道了')+'</button>';m.classList.add('show');window._mcb=cb}
+function closeModal(){$('#modal').classList.remove('show');if(window._mcb)window._mcb()}
+
+// ========== STATE ==========
+let S={
+  daily:LS.get('daily',40),cg:LS.get('cg',0),
+  mode:LS.get('mode','az'),cur:LS.get('cur',null),
+  learned:LS.get('learned',{}),checkins:LS.get('checkins',[]),
+  exp:LS.get('exp',0),achs:LS.get('achs',[]),
+  tl:LS.get('tl_'+today(),[]),td:today(),
+  phase:0,cwi:0,quiz:[],qi:0,qr:[],fi:0,fc:[],
+  ms:null,mm:new Set(),mc:0,mt:0
+};
+if(S.td!==today()){S.td=today();S.tl=[];LS.set('tl_'+today(),[])}
+// 扁平词游标（按模式分别记录已学到的位置）；老用户由旧 cg 换算 az 起点
+if(!S.cur||typeof S.cur!=='object'){
+  var azStart=0;for(var _i=0;_i<S.cg&&_i<GROUPS.length;_i++)azStart+=GROUPS[_i].words.length;
+  S.cur={az:azStart,theme:0};
+}
+function activeGroups(){return S.mode==='theme'?THEME_GROUPS:GROUPS}
+function activeWords(){var a=[];activeGroups().forEach(function(g){g.words.forEach(function(w){a.push(w)})});return a}
+function curPos(){var p=S.cur[S.mode];return typeof p==='number'?p:0}
+// 根据扁平游标定位当前所在的“组/主题”名称
+function curGroupName(){
+  var gs=activeGroups(),pos=curPos(),acc=0;
+  for(var i=0;i<gs.length;i++){acc+=gs[i].words.length;if(pos<acc)return gs[i].name;}
+  return gs.length?gs[gs.length-1].name:'';
+}
+function save(){LS.set('daily',S.daily);LS.set('cg',S.cg);LS.set('mode',S.mode);LS.set('cur',S.cur);LS.set('learned',S.learned);LS.set('checkins',S.checkins);LS.set('exp',S.exp);LS.set('achs',S.achs);LS.set('tl_'+today(),S.tl)}
+function addExp(n){S.exp+=n;save()}
+
+// ========== LEVELS ==========
+const LVS=[{l:1,n:'🐣 单词萌新',e:0},{l:2,n:'🔤 字母小兵',e:100},{l:3,n:'📖 背词学徒',e:250},{l:4,n:'🏹 单词猎人',e:500},{l:5,n:'⚔️ 词汇剑客',e:800},{l:6,n:'🧠 记忆达人',e:1200},{l:7,n:'🦸 单词游侠',e:1700},{l:8,n:'🛡️ 词汇骑士',e:2300},{l:9,n:'✍️ 拼写大师',e:3000},{l:10,n:'⛵ 词海舵手',e:4000},{l:11,n:'🪄 单词法师',e:5200},{l:12,n:'🥋 词汇宗师',e:6500},{l:13,n:'🤓 学霸附体',e:8000},{l:14,n:'🌟 词汇巨星',e:10000},{l:15,n:'👑 单词王者',e:12500},{l:16,n:'🐉 词汇传说',e:15500},{l:17,n:'📚 活词典',e:19000},{l:18,n:'⚡ 词汇之神',e:23000},{l:19,n:'🚀 满级学神',e:27500},{l:20,n:'🏆 词汇天花板',e:32500}];
+function getLv(e){let v=LVS[0];for(let i=LVS.length-1;i>=0;i--)if(e>=LVS[i].e){v=LVS[i];break}return v}
+function getNxt(e){for(let i=0;i<LVS.length;i++)if(e<LVS[i].e)return LVS[i];return null}
+
+// ========== ACHIEVEMENTS ==========
+const ACHS=[
+{id:'fl',n:'初识单词',i:'🌱',c:()=>Object.keys(S.learned).length>=1},
+{id:'fc',n:'首日打卡',i:'📅',c:()=>S.checkins.length>=1},
+{id:'s3',n:'三日连续',i:'🔥',c:()=>getStreak()>=3},
+{id:'s7',n:'一周坚持',i:'💪',c:()=>getStreak()>=7},
+{id:'s30',n:'月度达人',i:'🏆',c:()=>getStreak()>=30},
+{id:'w50',n:'小有积累',i:'📝',c:()=>cntM()>=50},
+{id:'w100',n:'百词斩',i:'💯',c:()=>cntM()>=100},
+{id:'w500',n:'词汇半千',i:'⭐',c:()=>cntM()>=500},
+{id:'w1000',n:'千词达',i:'🌟',c:()=>cntM()>=1000},
+{id:'pq',n:'完美测试',i:'🎯',c:()=>S._pq},
+{id:'l5',n:'五级学者',i:'🎓',c:()=>getLv(S.exp).l>=5},
+{id:'l10',n:'词汇王者',i:'👑',c:()=>getLv(S.exp).l>=10}
+];
+function chkAch(){let nw=[];ACHS.forEach(a=>{if(!S.achs.includes(a.id)&&a.c()){S.achs.push(a.id);nw.push(a)}});if(nw.length){save();nw.forEach(a=>showModal('🎉 解锁成就','<div style="font-size:48px;margin:8px">'+a.i+'</div><b>'+a.n+'</b>'))}}
+function getStreak(){const c=S.checkins;if(!c.length)return 0;const s=[...c].sort().reverse();const t=today();const d1=new Date();d1.setDate(d1.getDate()-1);if(s[0]!==t&&s[0]!==d1.toISOString().slice(0,10))return 0;let r=1;for(let i=1;i<s.length;i++){if(Math.round((new Date(s[i-1])-new Date(s[i]))/864e5)===1)r++;else break}return r}
+function cntM(){return Object.values(S.learned).filter(v=>v==='m').length}
+function cntR(){return Object.values(S.learned).filter(v=>v==='r').length}
+function cntT(){return GROUPS.reduce((s,g)=>s+g.words.length,0)}
+
+// ========== NAVIGATION ==========
+let curPage='home';
+function nav(p){
+  curPage=p;$$('.page').forEach(e=>e.classList.remove('active'));
+  const el=$('#page-'+p);if(el)el.classList.add('active');
+  $$('.tab-item').forEach(t=>t.classList.toggle('active',t.dataset.page===p));
+  window.scrollTo(0,0);
+  if(p==='home')rHome();else if(p==='learn')rLearn();else if(p==='review')rReview();else if(p==='stats')rStats();else if(p==='book')rBook();
+}
+$$('.tab-item').forEach(t=>t.onclick=()=>nav(t.dataset.page));
+
+// ========== HOME ==========
+function lvStepsHTML(){
+  var idx=0;for(var i=0;i<LVS.length;i++){if(S.exp>=LVS[i].e)idx=i;}
+  var start=idx,end=Math.min(LVS.length-1,idx+3);if(end-start<3)start=Math.max(0,end-3);
+  var n=end-start+1,unit=100/n,first=unit*0.5,last=unit*(n-0.5);
+  var epFrac=idx<LVS.length-1?(S.exp-LVS[idx].e)/(LVS[idx+1].e-LVS[idx].e):1;epFrac=Math.max(0,Math.min(1,epFrac));
+  var curPos=unit*((idx-start)+0.5+epFrac);curPos=Math.min(curPos,last);
+  var steps='';
+  for(var i=start;i<=end;i++){var cls=i<idx?'done':(i===idx?'cur':'');steps+='<div class="lvstep '+cls+'"><div class="dot"></div><div class="t">Lv.'+LVS[i].l+'</div><div class="s">'+LVS[i].n+'</div></div>'}
+  return '<div class="lvbar"><div class="lvtrack" style="left:'+first+'%;width:'+(last-first)+'%"></div><div class="lvfill" style="left:'+first+'%;width:'+(curPos-first)+'%"></div><div class="lvsteps">'+steps+'</div></div>';
+}
+function rHome(){
+  const t=cntT(),m=cntM(),r=cntR(),p=t-m-r,lv=getLv(S.exp),nx=getNxt(S.exp),sk=getStreak();
+  const ci=S.checkins.includes(today()),ep=nx?((S.exp-lv.e)/(nx.e-lv.e)*100):100;
+  $('#page-home').innerHTML=
+  '<div class="level-card" style="cursor:pointer" onclick="nav(\'stats\')"><h2>Lv.'+lv.l+' '+lv.n+' <span style="font-size:12px;opacity:.85;font-weight:400">🪜 查看成长阶梯 ›</span></h2><div class="exp-text">'+S.exp+' / '+(nx?nx.e:'MAX')+' EXP</div>'+lvStepsHTML()+'</div>'+
+  '<div class="stat-row"><div class="stat-item"><div class="stat-num" style="color:var(--p)">'+p+'</div><div class="stat-label">待学习</div></div><div class="stat-item"><div class="stat-num" style="color:var(--ok)">'+m+'</div><div class="stat-label">已背会</div></div><div class="stat-item"><div class="stat-num" style="color:var(--no)">'+r+'</div><div class="stat-label">待复习</div></div></div>'+
+  '<div class="streak-card"><div class="fire">🔥</div><div class="num">'+sk+'</div><div>连续打卡天数</div></div>'+
+  '<div class="card"><div class="section-title">🗂️ 学习模式</div><div class="daily-select"><div class="daily-opt'+(S.mode==='az'?' active':'')+'" onclick="setMode(\'az\')">🔤 字母序</div><div class="daily-opt'+(S.mode==='theme'?' active':'')+'" onclick="setMode(\'theme\')">📚 主题归类</div></div><div style="text-align:center;font-size:12px;color:var(--t3);margin-top:4px">'+(S.mode==='theme'?'按主题分组，组内同根词相邻，便于成段写作':'按 A→Z 字母顺序学习')+'</div></div>'+
+  '<div class="card"><div class="section-title">📝 每日词量</div><div class="daily-select">'+[5,10,15,20].map(function(n){return'<div class="daily-opt'+(S.daily===n?' active':'')+'" onclick="setDaily('+n+')">'+n+'个</div>'}).join('')+'</div><div class="daily-custom"><span>自定义</span><input type="number" id="dailyInput" min="1" max="500" value="'+S.daily+'" onchange="setDaily(this.value)" onkeydown="if(event.key===\'Enter\')this.blur()"><span>个</span></div></div>'+
+  '<button class="btn btn-primary btn-full" style="padding:16px;font-size:17px" onclick="goLearn()">'+(S.tl.length>0?'📖 继续今日学习':'📖 开始今日学习')+'</button>'+
+  '<div style="text-align:center;margin:8px;font-size:13px;color:var(--t3)">当前：'+curGroupName()+' · 今日已学'+S.tl.length+'词'+(ci?' · ✅已打卡':'')+'</div>'+
+  (ci?'':'<button class="btn btn-success btn-full" style="margin-top:8px" onclick="doCheckin()">📅 立即打卡 (+20EXP)</button>');
+}
+function doCheckin(){var t=today();if(S.checkins.includes(t))return;S.checkins.push(t);addExp(20);chkAch();rHome()}
+function setMode(m){if(S.mode===m)return;S.mode=m;LW=[];S.phase=0;S.cwi=0;save();rHome()}
+function setDaily(n){n=parseInt(n,10);if(isNaN(n)||n<1)n=1;if(n>500)n=500;S.daily=n;save();rHome()}
+
+// ========== LEARN ==========
+var LW=[];
+function goLearn(){nav('learn')}
+function getTodayWords(){var all=activeWords(),start=curPos(),w=[];for(var i=start;i<all.length&&w.length<S.daily;i++){w.push(JSON.parse(JSON.stringify(all[i])))}return w}
+function rLearn(){
+  if(S.phase===0&&!LW.length){S.rev=false;LW=getTodayWords();S.cwi=0;S.tStart=Date.now()}
+  var pg=$('#page-learn');
+  if(!LW.length){pg.innerHTML='<div class="empty-state"><div class="icon">🎉</div><h3>全部学完啦！</h3></div>';return}
+  if(S.phase===0)rP1(pg);else if(S.phase===1)rP2(pg);else rP3(pg);
+}
+
+// Phase 1: Word Study
+function rP1(pg){
+  var w=LW[S.cwi];if(!w){S.phase=1;rLearn();return}
+  var isV=/^v/i.test(w.pos),isA=/^adj|^adv/i.test(w.pos);
+  var ex='';
+  if(isA){if(w.synonyms)ex+='<div class="syn-ant"><span class="syn">近义: '+w.synonyms+'</span></div>';if(w.antonyms)ex+='<div class="syn-ant"><span class="ant">反义: '+w.antonyms+'</span></div>'}
+  var col='';
+  var ck=(w.en||'').toLowerCase();
+  if(COL[ck]){
+    var items=COL[ck].split('/').map(function(s){return s.trim()}).filter(Boolean);
+    col='<div class="colloc"><div class="ct">🔗 固定搭配</div>'+items.map(function(s){return'<div class="ci">• '+s+'</div>'}).join('')+'</div>';
+  }
+  pg.innerHTML=
+  '<div style="text-align:center;color:var(--t3);font-size:13px;margin-bottom:4px">'+(S.cwi+1)+'/'+LW.length+' · 阶段一：学习</div>'+
+  '<div class="progress-bar"><div class="progress-fill blue" style="width:'+(S.cwi/LW.length*100)+'%"></div></div>'+
+  '<div class="word-card">'+
+    '<div class="word">'+w.en+'<button class="speak-btn" onclick="speak(\''+w.en.replace(/'/g,"\\'")+'\')">🔊</button></div>'+
+    '<div class="pos"><span id="ipaSlot" class="ipa">'+(w.phonetic||'')+'</span> '+w.pos+'</div>'+
+    '<div class="cn">'+w.cn+'</div>'+
+    (w.example?'<div class="example"><div class="en">'+w.example+'</div><div class="cn">'+(w.exampleCn||'')+'</div></div>':'')+
+    ex+
+    col+
+    (w.tip?'<div class="tip">💡 '+w.tip+'</div>':'')+
+  '</div>'+
+  '<div class="nav-btns">'+
+    (S.cwi>0?'<button class="btn btn-outline" onclick="S.cwi--;rLearn()">⬅ 上一个</button>':'<div></div>')+
+    '<button class="btn btn-primary" onclick="goNext()">'+(S.cwi<LW.length-1?'下一个 ➡':'开始卡片练习 📝')+'</button>'+
+  '</div>';
+  ensureIPA(w.en,function(ipa){var el=document.getElementById('ipaSlot');if(el&&ipa){el.textContent=ipa;w.phonetic=ipa;}});
+  playCard(w); // 进入卡片自动朗读：英文发音 + 中文词性词义
+}
+function goNext(){S.cwi++;if(S.cwi>=LW.length){S.phase=1;S.fi=0;S.fc=LW.map(function(w){return{w:w,f:false,k:null}})}rLearn()}
+
+// Phase 2: Flashcard
+function rP2(pg){
+  var c=S.fc[S.fi];if(!c){finFlash();return}
+  pg.innerHTML=
+  '<div style="text-align:center;color:var(--t3);font-size:13px">'+(S.fi+1)+'/'+S.fc.length+' · 阶段二：翻卡片</div>'+
+  '<div class="progress-bar"><div class="progress-fill blue" style="width:'+(S.fi/S.fc.length*100)+'%"></div></div>'+
+  '<div class="flip-card'+(c.f?' flipped':'')+'" onclick="S.fc['+S.fi+'].f=true;rLearn()">'+
+    '<div class="flip-inner">'+
+      '<div class="flip-front"><div class="word">'+c.w.en+'</div><div class="pos" style="opacity:.8;margin-top:12px">👆 点击翻转</div></div>'+
+      '<div class="flip-back"><div class="pos">'+c.w.pos+'</div><div class="cn" style="font-size:24px;font-weight:700;margin:8px 0">'+c.w.cn+'</div></div>'+
+    '</div>'+
+  '</div>'+
+  (c.f?'<div class="nav-btns"><button class="btn btn-danger btn-full" onclick="flashR(false)">✗ 不认识</button><button class="btn btn-success btn-full" onclick="flashR(true)">✓ 认识</button></div>':'');
+  if(!c.f)speak(c.w.en); // 正面（英文）显示时自动朗读单词
+}
+function flashR(k){S.fc[S.fi].k=k;S.fi++;if(S.fi>=S.fc.length)finFlash();else rLearn()}
+function finFlash(){S.phase=2;S.qi=0;S.qr=[];genQuiz();rLearn()}
+
+// Phase 3: Quiz
+function genQuiz(){
+  var qs=[];
+  LW.forEach(function(w,i){qs.push({t:'spell',wi:i,w:w});qs.push({t:'pos',wi:i,w:w})});
+  for(var i=0;i<LW.length;i+=5){var b=LW.slice(i,Math.min(i+5,LW.length));if(b.length>=3)qs.push({t:'match',wi:i,ws:b})}
+  var sp=shuffle(qs.filter(function(q){return q.t==='spell'}));
+  var mt=shuffle(qs.filter(function(q){return q.t==='match'}));
+  var ps=shuffle(qs.filter(function(q){return q.t==='pos'}));
+  var all=[sp,mt,ps];S.quiz=[];
+  var mx=Math.max(sp.length,mt.length,ps.length);
+  for(var i=0;i<mx;i++){var order=shuffle([0,1,2]);for(var j=0;j<3;j++){if(i<all[order[j]].length)S.quiz.push(all[order[j]][i])}}
+}
+function rP3(pg){
+  var q=S.quiz[S.qi];if(!q){finQuiz();return}
+  var tl={spell:'✏️ 字母拼写',match:'🔗 中英连线',pos:'📋 词性分类'}[q.t];
+  pg.innerHTML='<div style="text-align:center;color:var(--t3);font-size:13px">'+(S.qi+1)+'/'+S.quiz.length+' · 阶段三：测试</div><div class="progress-bar"><div class="progress-fill blue" style="width:'+(S.qi/S.quiz.length*100)+'%"></div></div><div style="text-align:center;margin:8px 0"><span class="quiz-type-badge '+q.t+'">'+tl+'</span></div><div id="qc"></div>';
+  if(q.t==='spell')rSpell(q);else if(q.t==='match')rMatch(q);else rPosQ(q);
+}
+
+// Spell Quiz
+function rSpell(q){
+  var w=q.w,ls=shuffle(w.en.split(''));
+  window._sa=w.en;window._ss=new Array(w.en.length).fill(null);window._sl=ls;
+  var slots='',btns='';
+  for(var i=0;i<ls.length;i++)slots+='<div class="answer-letter" data-i="'+i+'" style="visibility:hidden" onclick="rmLtr('+i+')"></div>';
+  for(var i=0;i<ls.length;i++)btns+='<button class="letter-btn" data-i="'+i+'" onclick="pkLtr('+i+')">'+ls[i]+'</button>';
+  $('#qc').innerHTML='<div style="text-align:center;font-size:20px;font-weight:700;margin:16px 0">'+w.cn+'</div><div style="text-align:center;color:var(--t3);font-size:13px;margin-bottom:12px">点击字母排列出正确的单词<br><span style="color:var(--warn)">👆 选错了？点上面已选的字母即可放回重选</span></div><div class="answer-area" id="aa">'+slots+'</div><div class="letter-grid">'+btns+'</div><button class="btn btn-primary btn-full" style="margin-top:12px" onclick="chkSpell()" id="sb" disabled>确认</button>';
+}
+function pkLtr(i){var s=window._ss;for(var fi=0;fi<s.length;fi++){if(s[fi]===null){s[fi]=i;break}}$$('.letter-btn[data-i="'+i+'"]')[0].classList.add('used');updSlots()}
+function rmLtr(i){var s=window._ss;if(s[i]===null)return;for(var j=i;j<s.length;j++){if(s[j]!==null){$$('.letter-btn[data-i="'+s[j]+'"]')[0].classList.remove('used');s[j]=null}}updSlots()}
+function updSlots(){var s=window._ss,l=window._sl;for(var i=0;i<s.length;i++){var e=$$('.answer-letter[data-i="'+i+'"]')[0];if(s[i]!==null){e.textContent=l[s[i]];e.style.visibility='visible'}else{e.textContent='';e.style.visibility='hidden'}}$('#sb').disabled=s.indexOf(null)>=0&&s.filter(function(x){return x===null}).length>0?false:true;$('#sb').disabled=s.filter(function(x){return x!==null}).length<s.length}
+function chkSpell(){var s=window._ss,l=window._sl,ans='';for(var i=0;i<s.length;i++)ans+=l[s[i]];var ok=ans.toLowerCase()===window._sa.toLowerCase();var q=S.quiz[S.qi];S.qr.push({w:q.w,ok:ok});if(ok){S.learned[q.w.en]='m';addExp(5)}else{if(S.learned[q.w.en]!=='m')S.learned[q.w.en]='r'};save();showFb(ok,q.w,function(){S.qi++;rLearn()})}
+
+// Match Quiz
+function rMatch(q){
+  var ws=q.ws;
+  var L=shuffle(ws.map(function(w,i){return{i:i,t:w.cn}}));
+  var R=shuffle(ws.map(function(w,i){return{i:i,t:w.en}}));
+  window._mL=L;window._mR=R;S.mm=new Set();S.mc=0;S.mt=ws.length;S._mw=ws[0];
+  function mkItems(arr,side){return arr.map(function(it){return'<div class="match-item" data-s="'+side+'" data-i="'+it.i+'" onclick="mSel(\''+side+'\','+it.i+',this)">'+it.t+'</div>'}).join('')}
+  $('#qc').innerHTML='<div style="text-align:center;font-size:16px;font-weight:600;margin:12px 0">将中文和英文配对</div><div class="match-container"><div class="match-col">'+mkItems(L,'L')+'</div><div class="match-col">'+mkItems(R,'R')+'</div></div><div style="text-align:center;color:var(--t3);font-size:13px;margin-top:8px" id="mp">0/'+ws.length+'</div>';
+}
+function mSel(side,idx,el){
+  if(S.mm.has(side+'_'+idx))return;
+  if(!S.ms){S.ms={s:side,i:idx,e:el};el.classList.add('selected');return}
+  if(S.ms.s===side){S.ms.e.classList.remove('selected');S.ms={s:side,i:idx,e:el};el.classList.add('selected');return}
+  if(S.ms.i===idx){sfx(true);S.ms.e.classList.remove('selected');S.ms.e.classList.add('matched');el.classList.add('matched');S.mm.add(side+'_'+idx);S.mm.add((side==='L'?'R':'L')+'_'+idx);S.mc++;$('#mp').textContent=S.mc+'/'+S.mt;S.ms=null;if(S.mc>=S.mt){setTimeout(function(){S.qr.push({w:S._mw,ok:true});addExp(5*S.mt);save();S.qi++;rLearn()},600)}}else{sfx(false);el.classList.add('wrong');S.ms.e.classList.add('wrong');var se=S.ms.e;setTimeout(function(){el.classList.remove('wrong');se.classList.remove('wrong');S.ms=null},500)}
+}
+
+// POS Quiz
+function rPosQ(q){
+  var w=q.w,cp=w.pos;
+  var all=['n.','v.','adj.','adv.','prep.','conj.','pron.','num.'];
+  var opts=[cp];var oth=all.filter(function(p){return p!==cp});
+  while(opts.length<4&&oth.length){var ri=Math.floor(Math.random()*oth.length);opts.push(oth.splice(ri,1)[0])}
+  opts=shuffle(opts);window._pc=cp;
+  var ip0=(ipaStore()[w.en.toLowerCase()]||'');
+  var html='<div style="text-align:center;font-size:24px;font-weight:700;margin:16px 0">'+w.en+'</div><div style="text-align:center;color:var(--p);font-family:\'Times New Roman\',serif;font-size:15px;margin-top:-8px" id="posIpa">'+ip0+'</div><div style="text-align:center;margin:8px 0"><button class="speak-btn" onclick="speak(\''+w.en.replace(/'/g,"\\'")+'\')">🔊</button> 选择正确的词性</div><div class="pos-options">';
+  opts.forEach(function(p){html+='<div class="pos-opt" onclick="chkPos(\''+p.replace(/'/g,"\\'")+'\',this)">'+p+'</div>'});
+  html+='</div>';$('#qc').innerHTML=html;
+  ensureIPA(w.en,function(ipa){var el=document.getElementById('posIpa');if(el&&ipa)el.textContent=ipa;});
+  speak(w.en); // 进入词性题自动朗读单词
+}
+function chkPos(sel,el){
+  var ok=sel===window._pc,q=S.quiz[S.qi];sfx(ok);
+  $$('.pos-opt').forEach(function(o){o.style.pointerEvents='none';if(o.textContent===window._pc)o.classList.add('correct')});
+  if(!ok)el.classList.add('wrong');
+  S.qr.push({w:q.w,ok:ok});if(ok){S.learned[q.w.en]='m';addExp(3)}else{if(S.learned[q.w.en]!=='m')S.learned[q.w.en]='r'};save();setTimeout(function(){S.qi++;rLearn()},800);
+}
+
+// 用 Web Audio 合成答对/答错提示音（无需音频文件）
+var _actx=null;
+function sfx(ok){
+  try{
+    _actx=_actx||new (window.AudioContext||window.webkitAudioContext)();
+    var ac=_actx;
+    var play=function(){
+      var now=ac.currentTime;
+      function tone(freq,start,dur,type,vol){
+        var o=ac.createOscillator(),g=ac.createGain();
+        o.type=type||'sine';o.frequency.value=freq;o.connect(g);g.connect(ac.destination);
+        g.gain.setValueAtTime(0.0001,now+start);
+        g.gain.exponentialRampToValueAtTime(vol||0.2,now+start+0.012);
+        g.gain.exponentialRampToValueAtTime(0.0001,now+start+dur);
+        o.start(now+start);o.stop(now+start+dur+0.02);
+      }
+      if(ok){tone(660,0,0.13,'sine',0.3);tone(990,0.1,0.2,'sine',0.3);}      // 上行“叮咚”
+      else{tone(196,0,0.22,'square',0.2);tone(155,0.13,0.26,'square',0.2);}  // 下行“嗡”
+    };
+    // 自动播放策略下 AudioContext 可能处于 suspended，需先异步 resume 再发声
+    if(ac.state==='suspended'){ac.resume().then(play).catch(play);}else{play();}
+  }catch(e){}
+}
+// 语音转文字：把口述的英文转成文字追加到“今日运用”短文框
+var _rec=null,_recOn=false;
+function dictateEssay(btn){
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){alert('当前浏览器不支持语音输入，请用 Chrome / Edge');return}
+  var ta=document.getElementById('essayBox');if(!ta)return;
+  if(_recOn&&_rec){_rec.stop();return}
+  _rec=new SR();_rec.lang='en-US';_rec.interimResults=true;_rec.continuous=true;
+  var base=ta.value, key='essay_'+today();
+  _rec.onstart=function(){_recOn=true;btn.textContent='⏹ 停止录音';btn.classList.add('btn-danger');btn.classList.remove('btn-outline')};
+  _rec.onend=function(){_recOn=false;btn.textContent='🎤 语音输入';btn.classList.remove('btn-danger');btn.classList.add('btn-outline');LS.set(key,ta.value)};
+  _rec.onerror=function(e){if(e&&e.error==='not-allowed')alert('未获得麦克风权限，请在浏览器允许使用麦克风')};
+  _rec.onresult=function(e){
+    var fin='',intr='';
+    for(var i=e.resultIndex;i<e.results.length;i++){var tr=e.results[i][0].transcript;if(e.results[i].isFinal)fin+=tr;else intr+=tr}
+    if(fin)base=(base?base.replace(/\s*$/,'')+' ':'')+fin.trim();
+    ta.value=base+(intr?' '+intr:'');
+    ta.scrollTop=ta.scrollHeight;LS.set(key,ta.value);
+  };
+  try{_rec.start()}catch(e){}
+}
+function showFb(ok,w,cb){
+  sfx(ok);
+  var d=document.createElement('div');d.className='card fade-in';d.style.textAlign='center';d.style.marginTop='12px';
+  d.innerHTML='<div style="font-size:48px">'+(ok?'✅':'❌')+'</div><div style="font-size:16px;font-weight:600;margin:8px 0">'+(ok?'正确！':'错误')+'</div><div style="color:var(--t2)">'+w.en+' - '+w.pos+' '+w.cn+'</div><button class="btn btn-primary" style="margin-top:12px" id="fbc">继续</button>';
+  $('#page-learn').appendChild(d);$('#fbc').onclick=function(){d.remove();cb()};
+}
+
+function finQuiz(){
+  var t=S.qr.length,c=S.qr.filter(function(r){return r.ok}).length,p=t?Math.round(c/t*100):0;
+  if(c===t&&t>0){S._pq=true;chkAch()}
+  S.qr.forEach(function(r){if(S.tl.indexOf(r.w.en)===-1)S.tl.push(r.w.en)});
+  var dayWords=LW.slice();
+  // 仅“正常学习”推进游标；复习模式不推进
+  if(!S.rev){var all=activeWords();S.cur[S.mode]=Math.min(all.length,curPos()+LW.length);
+    if(S.mode==='az'){var acc=0,gi=0;while(gi<GROUPS.length&&acc+GROUPS[gi].words.length<=S.cur.az){acc+=GROUPS[gi].words.length;gi++;}S.cg=gi;}}
+  S.rev=false;
+  var dt=S.tStart?Math.round((Date.now()-S.tStart)/1000):0;S.tStart=null;
+  var totSec=LS.get('time_'+today(),0)+dt;LS.set('time_'+today(),totSec);
+  save();LW=[];S.phase=0;S.cwi=0;
+  var chips=dayWords.map(function(w){return'<span class="use-chip" onclick="speak(\''+w.en.replace(/'/g,"\\'")+'\')">'+w.en+' <span class="uc-cn">'+w.cn+'</span> 🔊</span>'}).join('');
+  var ek='essay_'+today();var saved=(LS.get(ek,'')||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  $('#page-learn').innerHTML='<div style="text-align:center;padding:24px 0"><div style="font-size:48px">'+(p>=80?'🎉':p>=60?'👍':'💪')+'</div><div style="font-size:48px;font-weight:800;color:var(--p);margin:8px 0">'+p+'%</div><div style="color:var(--t3)">正确率</div><div class="stat-row" style="margin:16px 0"><div class="stat-item"><div class="stat-num" style="color:var(--ok)">'+c+'</div><div class="stat-label">正确</div></div><div class="stat-item"><div class="stat-num" style="color:var(--no)">'+(t-c)+'</div><div class="stat-label">错误</div></div></div></div>'+
+  '<div class="card"><div class="section-title">✍️ 今日运用</div><div style="font-size:13px;color:var(--t2);margin-bottom:8px">用下面学过的单词，写一篇 3–5 句的小短文，或口头说 2–3 句话 👇</div><div class="use-chips">'+chips+'</div><div style="display:flex;align-items:center;gap:8px;margin-top:8px"><button class="btn btn-outline btn-sm" id="micBtn" onclick="dictateEssay(this)">🎤 语音输入</button><span style="font-size:12px;color:var(--t3)">说英文，自动转文字</span></div><textarea class="essay-box" id="essayBox" placeholder="在这里写你的小短文…（也可点🎤口述，自动保存）" oninput="LS.set(\''+ek+'\',this.value)">'+saved+'</textarea></div>'+
+  '<button class="btn btn-primary btn-full" onclick="nav(\'home\')">返回首页</button>'+(c<t?'<button class="btn btn-outline btn-full" style="margin-top:8px" onclick="nav(\'review\')">去复习错词</button>':'');
+  setTimeout(function(){showSummary(totSec)},500);
+}
+function showSummary(totSec){
+  var tl=S.tl||[];
+  var rows=tl.map(function(en,i){var w=ENMAP[en];if(!w)return'';return'<div class="sw c'+(i%6)+'" onclick="speak(\''+w.en.replace(/'/g,"\\'")+'\')"><span class="e">'+w.en+'</span><span class="c">'+w.cn+'</span></div>'}).join('');
+  var html=''
+   +'<div class="sum-quote">🌟 '+todayQuote()+'</div>'
+   +'<div class="sum-meta"><span class="sum-chip">⏱️ 用时 <b>'+fmtDur(totSec)+'</b></span><span class="sum-chip">🔥 已坚持 <b>'+S.checkins.length+'</b> 天</span></div>'
+   +'<div class="sum-stats">'
+     +'<div class="sum-stat"><div class="n" style="color:var(--p)">'+tl.length+'</div><div class="l">今日学习</div></div>'
+     +'<div class="sum-stat"><div class="n" style="color:var(--ok)">'+cntM()+'</div><div class="l">已学会</div></div>'
+     +'<div class="sum-stat"><div class="n" style="color:var(--no)">'+cntR()+'</div><div class="l">待复习</div></div>'
+   +'</div>'
+   +'<div class="sum-list-head"><span>📚 今日单词</span><span class="cnt">'+tl.length+' 个</span></div>'
+   +'<div class="sum-list"><div class="sum-words">'+(rows||'<div style="color:#999;text-align:center;padding:12px;width:100%">今天还没有学习记录</div>')+'</div></div>';
+  showModal('🎉 今日学习完成',html,'太棒了');
+}
+
+// ========== REVIEW ==========
+function rReview(){
+  var rw=[];GROUPS.forEach(function(g){g.words.forEach(function(w){if(S.learned[w.en]==='r')rw.push(w)})});
+  if(!rw.length){$('#page-review').innerHTML='<div class="empty-state"><div class="icon">🎉</div><h3>太棒了！</h3><p>没有需要复习的单词</p></div>';return}
+  var html='<div class="card" style="text-align:center"><div style="color:var(--t3)">待复习单词</div><div style="font-size:36px;font-weight:700;color:var(--no);margin:8px 0">'+rw.length+'</div><button class="btn btn-primary btn-full" onclick="startRev()">开始复习（三阶段）</button></div><div class="card">';
+  rw.slice(0,50).forEach(function(w){html+='<div class="review-word"><span class="en">'+w.en+'</span><span style="color:var(--t3)">'+w.pos+'</span><span class="cn">'+w.cn+'</span></div>'});
+  if(rw.length>50)html+='<div style="text-align:center;color:var(--t3);padding:8px">还有'+(rw.length-50)+'个...</div>';
+  html+='</div>';$('#page-review').innerHTML=html;
+}
+function startRev(){var rw=[];GROUPS.forEach(function(g){g.words.forEach(function(w){if(S.learned[w.en]==='r')rw.push(JSON.parse(JSON.stringify(w)))})});LW=shuffle(rw).slice(0,S.daily);S.rev=true;S.phase=0;S.cwi=0;S.tStart=Date.now();nav('learn')}
+
+// ========== STATS ==========
+var calM=new Date().getMonth(),calY=new Date().getFullYear();
+// 词汇成长阶梯：按“已学会单词数”划分里程碑
+var WLAD=[
+ {n:'🐣 单词萌新',w:0},{n:'🔤 字母小兵',w:30},{n:'📖 背词学徒',w:80},{n:'🏹 单词猎人',w:150},
+ {n:'⚔️ 词汇剑客',w:250},{n:'🧠 记忆达人',w:380},{n:'🦸 单词游侠',w:540},{n:'🛡️ 词汇骑士',w:720},
+ {n:'✍️ 拼写大师',w:920},{n:'⛵ 词海舵手',w:1120},{n:'🪄 单词法师',w:1320},{n:'🥋 词汇宗师',w:1500},
+ {n:'🤓 学霸附体',w:1680},{n:'🌟 词汇巨星',w:1820},{n:'👑 单词王者',w:1920},{n:'🐉 词汇传说',w:2000},
+ {n:'📚 活词典',w:2050},{n:'⚡ 词汇之神',w:2075},{n:'🚀 满级学神',w:2085},{n:'🏆 词汇天花板',w:2088}
+];
+function wordRank(){var m=cntM(),ci=0;for(var i=0;i<WLAD.length;i++){if(m>=WLAD[i].w)ci=i;}return ci}
+function ladderHTML(){
+  var m=cntM(),ci=wordRank();
+  return '<div class="ladder">'+WLAD.map(function(nd,i){
+    var cur=i===ci, done=(m>=nd.w&&!cur);
+    var cls=cur?'cur':(done?'done':'lock');
+    var dot=done?'✓':(i+1);
+    var state;
+    if(cur){var nx=WLAD[i+1];state=nx?('再 '+(nx.w-m)+' 词升级'):'已满级 🎉';}
+    else if(done)state='已达成';
+    else state='需掌握 '+nd.w+' 词';
+    return '<div class="lad-node '+cls+'"><div class="lad-col"><div class="lad-dot">'+dot+'</div></div>'+
+      '<div class="lad-body"><div class="lad-name">Lv.'+(i+1)+' '+nd.n+'</div><div class="lad-sub">掌握 '+nd.w+' 词</div></div>'+
+      '<div class="lad-state">'+state+'</div></div>';
+  }).join('')+'</div>';
+}
+function rStats(){
+  var lv=getLv(S.exp),nx=getNxt(S.exp),m=cntM(),t=cntT(),sk=getStreak();
+  var mn=['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+  var fd=new Date(calY,calM,1).getDay(),dm=new Date(calY,calM+1,0).getDate(),td=today();
+  var cd='';['日','一','二','三','四','五','六'].forEach(function(d){cd+='<div class="cal-header">'+d+'</div>'});
+  for(var i=0;i<fd;i++)cd+='<div class="cal-day empty"></div>';
+  for(var d=1;d<=dm;d++){var ds=calY+'-'+String(calM+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');cd+='<div class="cal-day'+(S.checkins.indexOf(ds)>=0?' checked':'')+(ds===td?' today':'')+'">'+d+'</div>'}
+  $('#page-stats').innerHTML=
+  '<div class="level-card"><h2>Lv.'+lv.l+' '+lv.n+'</h2><div class="exp-text">'+S.exp+' EXP'+(nx?' / '+nx.e:'')+'</div>'+lvStepsHTML()+'</div>'+
+  '<div class="stat-row"><div class="stat-item"><div class="stat-num">'+sk+'</div><div class="stat-label">🔥 连续打卡</div></div><div class="stat-item"><div class="stat-num">'+S.checkins.length+'</div><div class="stat-label">📅 总打卡</div></div></div>'+
+  '<div class="card"><div class="section-title">📅 打卡日历</div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><button class="btn btn-sm btn-outline" onclick="calMonth(-1)">◀</button><b>'+calY+'年'+mn[calM]+'</b><button class="btn btn-sm btn-outline" onclick="calMonth(1)">▶</button></div><div class="calendar">'+cd+'</div></div>'+
+  '<div class="card"><div class="section-title">📊 掌握进度</div><div style="display:flex;align-items:center;gap:8px"><div style="flex:1"><div class="progress-bar"><div class="progress-fill green" style="width:'+(m/t*100).toFixed(1)+'%"></div></div></div><b>'+m+'/'+t+'</b></div></div>'+
+  '<div class="card"><div class="section-title">🪜 词汇成长阶梯</div><div style="font-size:12px;color:var(--t3);margin-bottom:10px">按「已学会单词数」解锁称号，当前已学会 <b style="color:var(--ok)">'+m+'</b> 词</div>'+ladderHTML()+'</div>'+
+  '<div class="card"><div class="section-title">🏆 成就徽章</div><div class="achievement-grid">'+ACHS.map(function(a){return'<div class="achievement'+(S.achs.indexOf(a.id)>=0?'':' locked')+'"><div class="icon">'+a.i+'</div><div class="name">'+a.n+'</div></div>'}).join('')+'</div></div>';
+}
+function calMonth(d){calM+=d;if(calM<0){calM=11;calY--}if(calM>11){calM=0;calY++}rStats()}
+
+// ========== WORD BOOK ==========
+var OG={};
+var bookMode=S.mode; // 词库视图独立于学习模式
+function bookGroups(){return bookMode==='theme'?THEME_GROUPS:GROUPS}
+function setBookView(m){if(bookMode===m)return;bookMode=m;OG={};rBook()}
+var _ipaLoading=false;
+function loadGroupIPA(gi){
+  if(_ipaLoading)return;
+  var g=bookGroups()[gi];if(!g)return;
+  var list=g.words.filter(function(w){return /^[a-zA-Z][a-zA-Z'-]*$/.test(w.en)&&ipaStore()[w.en.toLowerCase()]===undefined});
+  if(!list.length)return;
+  _ipaLoading=true;
+  var i=0;
+  function upd(){var b=document.getElementById('ipaBtn'+gi);if(b)b.textContent='加载中… '+i+'/'+list.length}
+  upd();
+  function next(){
+    if(i>=list.length){_ipaLoading=false;rBook();return}
+    ensureIPA(list[i].en,function(){i++;upd();setTimeout(next,250)}); // 每词间隔 250ms 限速
+  }
+  next();
+}
+function rBook(){
+  var ag=bookGroups();
+  var h='<div class="daily-select" style="margin-bottom:10px"><div class="daily-opt'+(bookMode==='az'?' active':'')+'" onclick="setBookView(\'az\')">🔤 字母序</div><div class="daily-opt'+(bookMode==='theme'?' active':'')+'" onclick="setBookView(\'theme\')">📚 主题分类</div></div>';
+  h+='<div style="margin-bottom:12px;color:var(--t3);font-size:13px">'+(bookMode==='theme'?'📚 主题视图':'🔤 字母序视图')+' · 共'+ag.length+'组 · '+cntT()+'词条</div>';
+  ag.forEach(function(g,gi){
+    var mc=g.words.filter(function(w){return S.learned[w.en]==='m'}).length;
+    var rc=g.words.filter(function(w){return S.learned[w.en]==='r'}).length;
+    var op=OG[gi];
+    h+='<div class="card" style="padding:12px;margin-bottom:8px"><div class="group-header" onclick="OG['+gi+']=!OG['+gi+'];rBook()"><span class="name">'+g.name+'</span><span class="counts">'+g.words.length+'词'+(mc?'（'+mc+'个已会）':'')+'</span><span style="color:var(--t3)">'+(op?'▼':'▶')+'</span></div>';
+    if(op){
+      var miss=g.words.filter(function(w){return /^[a-zA-Z][a-zA-Z'-]*$/.test(w.en)&&ipaStore()[w.en.toLowerCase()]===undefined}).length;
+      if(miss)h+='<div style="text-align:center;margin:6px 0"><button class="btn btn-sm btn-outline" id="ipaBtn'+gi+'" onclick="event.stopPropagation();loadGroupIPA('+gi+')">🔤 加载本组音标 ('+miss+')</button></div>';
+      h+='<div class="group-words open">';g.words.forEach(function(w){var st=S.learned[w.en];var ic=st==='m'?'✅':st==='r'?'🔄':'⬜';var ip=(ipaStore()[w.en.toLowerCase()]||'');h+='<div class="group-word"><span>'+ic+' <b>'+w.en+'</b>'+(ip?' <span class="ipa" style="color:var(--p);font-family:\'Times New Roman\',serif">'+ip+'</span>':'')+' <span style="color:var(--t3)">'+w.pos+'</span> '+w.cn+'</span></div>'});h+='</div>'}
+    h+='</div>';
+  });
+  $('#page-book').innerHTML=h;
+}
+
+// ========== INIT ==========
+nav('home');
+
+</script>
+</body>
+</html>
