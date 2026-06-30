@@ -668,7 +668,7 @@ function speak(t){
   if(/^[a-zA-Z][a-zA-Z'-]*$/.test(word)){
     try{
       if(!_audio)_audio=new Audio();
-      _audio.onerror=function(){synthSpeak(word)};
+      _audio.onerror=function(){try{_audio.onerror=null}catch(e){};synthSpeak(word)};
       _audio.src='https://dict.youdao.com/dictvoice?audio='+encodeURIComponent(word)+'&type=2';
       var pr=_audio.play();
       if(pr&&pr.catch)pr.catch(function(){synthSpeak(word)});
@@ -678,7 +678,8 @@ function speak(t){
   synthSpeak(word);
 }
 function synthSpeak(t){
-  if(!('speechSynthesis'in window)){alert('当前浏览器不支持语音朗读，请用 Chrome / Edge / Safari 打开');return}
+  // 某些手机内置浏览器（如微信）不支持 speechSynthesis，这里静默跳过，不再弹窗打断学习
+  if(!('speechSynthesis'in window)){return}
   if(!t)return;
   var tries=0;
   var doSpeak=function(){
